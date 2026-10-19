@@ -1,0 +1,5 @@
+Clinician ID,Name (made up),Test login,Role,Writing style,Habits to copy when writing their notes
+C1,Dr Testdoc One,test.clin1,Physician,"Terse, heavy short forms (Wt, BP, HR, c/o, f/u, BLE, A:, P:)","Writes weight in lb; sometimes leaves out the temperature unit; corrects themself mid-note (""sorry"", ""no wait"")"
+C2,NP Testnurse Two,test.clin2,Nurse practitioner,"Full sentences, tidy, metric units","Always states units; describes things in words (""walks short distances"")"
+C3,Dr Testdoc Three,test.clin3,Physician,"Dictation (speech-to-text): no punctuation, numbers as words","Says ""one thirty two over seventy eight"" for BP; long run-on sentences"
+S1,Test Scribe One,test.scribe1,Scribe,Types notes on behalf of C1,Used for access tests (A2)

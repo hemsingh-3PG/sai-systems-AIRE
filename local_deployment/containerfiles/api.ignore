@@ -1,0 +1,20 @@
+# Build-context exclusions for the API image (podman build --ignorefile).
+# Kept here rather than as a .dockerignore inside pacEHR_API so the repo
+# stays untouched.
+.git
+.github
+.claude
+**/bin/
+**/obj/
+*.sql
+docs/
+pipelines/
+solutions/
+temppp/
+e2e-playwright/
+PacEHR.Database/
+PacEHR.Database1/
+PacEHR.Tests.UnitTests/
+PacEHR.Tests.Integration/
+PacEHR.API.Tests/
+pacEHR/

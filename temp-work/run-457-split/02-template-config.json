@@ -1,0 +1,863 @@
+{
+  "templateId": 457,
+  "sections": [
+    {
+      "sectionId": 1,
+      "sectionName": "History14",
+      "fields": [
+        {
+          "slotKey": "s1_f5",
+          "fieldId": 5,
+          "displayName": "Nature of Presenting Illness888844545",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Nature of Presenting Illness888844545"
+        },
+        {
+          "slotKey": "s1_f917",
+          "fieldId": 917,
+          "displayName": "Resident care plan reviewed?12121212",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Resident care plan reviewed?12121212"
+        },
+        {
+          "slotKey": "s1_f6",
+          "fieldId": 6,
+          "displayName": "Medication List",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "\"Summarize the medication list into a concise format, highlighting active medications, discontinued ones, and any duplicates. Include medication name, dosage, frequency, and status (active/discontinued), and flag any inconsistencies or potential issues.\""
+        },
+        {
+          "slotKey": "s1_f7",
+          "fieldId": 7,
+          "displayName": "Allergy List",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Allergy List"
+        },
+        {
+          "slotKey": "s1_f1",
+          "fieldId": 1,
+          "displayName": "Code Status testing114477",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "The patient resuscitation preferences, such as Full Code, DNR (Do Not Resuscitate), etc11"
+        },
+        {
+          "slotKey": "s1_f8",
+          "fieldId": 8,
+          "displayName": "Past Medical History",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Past Medical History"
+        },
+        {
+          "slotKey": "s1_f9",
+          "fieldId": 9,
+          "displayName": "Past Surgical History",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Past Surgical History"
+        },
+        {
+          "slotKey": "s1_f2",
+          "fieldId": 2,
+          "displayName": "Room55",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Room55"
+        },
+        {
+          "slotKey": "s1_f4",
+          "fieldId": 4,
+          "displayName": "Chief Complaint1232",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "The primary reason the patient is being seen by a doctor."
+        },
+        {
+          "slotKey": "s1_f3",
+          "fieldId": 3,
+          "displayName": "Floor123",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Floor123"
+        },
+        {
+          "slotKey": "s1_f10",
+          "fieldId": 10,
+          "displayName": "Social History",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Summarize any information about the patient relating to their patient's lifestyle, habits, and social environment. Only include social history in this field This is information about a patient's lifestyle, habits, and social environment that can impact their health."
+        },
+        {
+          "slotKey": "s1_f11",
+          "fieldId": 11,
+          "displayName": "Family History",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Family History"
+        },
+        {
+          "slotKey": "s1_f1562",
+          "fieldId": 1562,
+          "displayName": "AIMS Score",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — AIMS Score"
+        },
+        {
+          "slotKey": "s1_f4102",
+          "fieldId": 4102,
+          "displayName": "testing field 1",
+          "fieldType": "multiSelectDropdown",
+          "variant": "Hard",
+          "aiSummaryPrompt": "History14 — testing field 1"
+        },
+        {
+          "slotKey": "s1_f4103",
+          "fieldId": 4103,
+          "displayName": "Testing Multi Select Checkbox",
+          "fieldType": "multiSelectCheckbox",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Testing Multi Select Checkbox"
+        },
+        {
+          "slotKey": "s1_f4104",
+          "fieldId": 4104,
+          "displayName": "Single select dropdown",
+          "fieldType": "dropdown",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Single select dropdown"
+        },
+        {
+          "slotKey": "s1_f1093",
+          "fieldId": 1093,
+          "displayName": "Adjustment Disorder with Depressed Mood",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "History14 — Adjustment Disorder with Depressed Mood"
+        }
+      ]
+    },
+    {
+      "sectionId": 2,
+      "sectionName": "Review of Systems2",
+      "fields": [
+        {
+          "slotKey": "s2_f12",
+          "fieldId": 12,
+          "displayName": "General",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — General"
+        },
+        {
+          "slotKey": "s2_f13",
+          "fieldId": 13,
+          "displayName": "Eyes",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Eyes"
+        },
+        {
+          "slotKey": "s2_f14",
+          "fieldId": 14,
+          "displayName": "Ears / Nose / Mouth / Throat",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Ears / Nose / Mouth / Throat"
+        },
+        {
+          "slotKey": "s2_f15",
+          "fieldId": 15,
+          "displayName": "Respiratory",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Respiratory"
+        },
+        {
+          "slotKey": "s2_f16",
+          "fieldId": 16,
+          "displayName": "Cardiovascular",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Cardiovascular"
+        },
+        {
+          "slotKey": "s2_f17",
+          "fieldId": 17,
+          "displayName": "Gastrointestinal",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Gastrointestinal"
+        },
+        {
+          "slotKey": "s2_f18",
+          "fieldId": 18,
+          "displayName": "Genitourinary",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Genitourinary"
+        },
+        {
+          "slotKey": "s2_f19",
+          "fieldId": 19,
+          "displayName": "Musculoskeletal",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Musculoskeletal"
+        },
+        {
+          "slotKey": "s2_f20",
+          "fieldId": 20,
+          "displayName": "Neurological",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Neurological"
+        },
+        {
+          "slotKey": "s2_f21",
+          "fieldId": 21,
+          "displayName": "Skin / Chest",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Skin / Chest"
+        },
+        {
+          "slotKey": "s2_f22",
+          "fieldId": 22,
+          "displayName": "Psychiatric",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Psychiatric"
+        },
+        {
+          "slotKey": "s2_f23",
+          "fieldId": 23,
+          "displayName": "Endocrine",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Endocrine"
+        },
+        {
+          "slotKey": "s2_f24",
+          "fieldId": 24,
+          "displayName": "Hematological / Lymphatic",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Hematological / Lymphatic"
+        },
+        {
+          "slotKey": "s2_f25",
+          "fieldId": 25,
+          "displayName": "Allergic / Immunological",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Review of Systems2 — Allergic / Immunological"
+        }
+      ]
+    },
+    {
+      "sectionId": 7,
+      "sectionName": "Vitals4",
+      "fields": [
+        {
+          "slotKey": "s7_f28",
+          "fieldId": 28,
+          "displayName": "Temperature2323",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — Temperature2323"
+        },
+        {
+          "slotKey": "s7_f29",
+          "fieldId": 29,
+          "displayName": "Blood Pressure",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "\"Summarize the blood pressure readings, highlighting trends over time, average systolic/diastolic values, any abnormal readings (e.g., hypertensive or hypotensive), and suggest if clinical attention is needed. Present the summary in clear, non-technical language suitable for a clinical note.\""
+        },
+        {
+          "slotKey": "s7_f30",
+          "fieldId": 30,
+          "displayName": "Pulse",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — Pulse"
+        },
+        {
+          "slotKey": "s7_f31",
+          "fieldId": 31,
+          "displayName": "O2 Saturation",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — O2 Saturation"
+        },
+        {
+          "slotKey": "s7_f32",
+          "fieldId": 32,
+          "displayName": "O2 Flow Rate",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — O2 Flow Rate"
+        },
+        {
+          "slotKey": "s7_f33",
+          "fieldId": 33,
+          "displayName": "Respiratory Rate",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — Respiratory Rate"
+        },
+        {
+          "slotKey": "s7_f34",
+          "fieldId": 34,
+          "displayName": "Pain Level",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — Pain Level"
+        },
+        {
+          "slotKey": "s7_f53",
+          "fieldId": 53,
+          "displayName": "BMI",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — BMI"
+        },
+        {
+          "slotKey": "s7_f27",
+          "fieldId": 27,
+          "displayName": "Height",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — Height"
+        },
+        {
+          "slotKey": "s7_f26",
+          "fieldId": 26,
+          "displayName": "Weight",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vitals4 — Weight"
+        }
+      ]
+    },
+    {
+      "sectionId": 4,
+      "sectionName": "Vital Signs - Updated",
+      "fields": [
+        {
+          "slotKey": "s4_f35",
+          "fieldId": 35,
+          "displayName": "General5",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — General5"
+        },
+        {
+          "slotKey": "s4_f36",
+          "fieldId": 36,
+          "displayName": "Eyes",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Eyes"
+        },
+        {
+          "slotKey": "s4_f37",
+          "fieldId": 37,
+          "displayName": "Ears / Nose / Mouth / Throat (ENMT for short)",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Ears / Nose / Mouth / Throat (ENMT for short)"
+        },
+        {
+          "slotKey": "s4_f38",
+          "fieldId": 38,
+          "displayName": "Respiratory",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Respiratory"
+        },
+        {
+          "slotKey": "s4_f39",
+          "fieldId": 39,
+          "displayName": "Cardiovascular",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Cardiovascular"
+        },
+        {
+          "slotKey": "s4_f40",
+          "fieldId": 40,
+          "displayName": "Gastrointestinal",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Gastrointestinal"
+        },
+        {
+          "slotKey": "s4_f41",
+          "fieldId": 41,
+          "displayName": "Genitourinary",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Genitourinary"
+        },
+        {
+          "slotKey": "s4_f42",
+          "fieldId": 42,
+          "displayName": "Musculoskeletal",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Musculoskeletal"
+        },
+        {
+          "slotKey": "s4_f43",
+          "fieldId": 43,
+          "displayName": "Neurological",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Neurological"
+        },
+        {
+          "slotKey": "s4_f44",
+          "fieldId": 44,
+          "displayName": "Skin / Chest",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Skin / Chest"
+        },
+        {
+          "slotKey": "s4_f45",
+          "fieldId": 45,
+          "displayName": "Psychiatric",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Psychiatric"
+        },
+        {
+          "slotKey": "s4_f46",
+          "fieldId": 46,
+          "displayName": "Endocrine",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Endocrine"
+        },
+        {
+          "slotKey": "s4_f47",
+          "fieldId": 47,
+          "displayName": "Hematological / Lymphatic",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Hematological / Lymphatic"
+        },
+        {
+          "slotKey": "s4_f48",
+          "fieldId": 48,
+          "displayName": "Allergic / Immunological",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Vital Signs - Updated — Allergic / Immunological"
+        }
+      ]
+    },
+    {
+      "sectionId": 81,
+      "sectionName": "Labs",
+      "fields": [
+        {
+          "slotKey": "s81_f257",
+          "fieldId": 257,
+          "displayName": "Labs2287",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "\"Summarize the lab results, highlighting key findings, abnormal values (high/low/critical), trends over time, and any missing or inconsistent data. Present the summary in a clinical format suitable for physician review, and include potential areas for follow-up if applicable.\""
+        },
+        {
+          "slotKey": "s81_f131",
+          "fieldId": 131,
+          "displayName": "AIMS Result6612",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — AIMS Result6612"
+        },
+        {
+          "slotKey": "s81_f1562",
+          "fieldId": 1562,
+          "displayName": "AIMS Score",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — AIMS Score"
+        },
+        {
+          "slotKey": "s81_f1611",
+          "fieldId": 1611,
+          "displayName": "Note Type",
+          "fieldType": "text",
+          "variant": "Hard",
+          "aiSummaryPrompt": "Labs — Note Type"
+        },
+        {
+          "slotKey": "s81_f554",
+          "fieldId": 554,
+          "displayName": "Abdomen",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Abdomen"
+        },
+        {
+          "slotKey": "s81_f1323",
+          "fieldId": 1323,
+          "displayName": "Abdomen Exam",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Abdomen Exam"
+        },
+        {
+          "slotKey": "s81_f665",
+          "fieldId": 665,
+          "displayName": "Abdominal",
+          "fieldType": "text",
+          "variant": "Soft",
+          "aiSummaryPrompt": "Labs — Abdominal"
+        },
+        {
+          "slotKey": "s81_f1357",
+          "fieldId": 1357,
+          "displayName": "Aberrant Vocalization:",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Aberrant Vocalization:"
+        },
+        {
+          "slotKey": "s81_f313",
+          "fieldId": 313,
+          "displayName": "Ability to Follow Commands SLW",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Ability to Follow Commands SLW"
+        },
+        {
+          "slotKey": "s81_f1026",
+          "fieldId": 1026,
+          "displayName": "5 or More Medications",
+          "fieldType": "text",
+          "variant": "",
+          "aiSummaryPrompt": "Labs — 5 or More Medications"
+        },
+        {
+          "slotKey": "s81_f1045",
+          "fieldId": 1045,
+          "displayName": "Ability to Understand Others",
+          "fieldType": "text",
+          "variant": "",
+          "aiSummaryPrompt": "Labs — Ability to Understand Others"
+        },
+        {
+          "slotKey": "s81_f793",
+          "fieldId": 793,
+          "displayName": "30-day Blood Sugar Review",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — 30-day Blood Sugar Review"
+        },
+        {
+          "slotKey": "s81_f3195",
+          "fieldId": 3195,
+          "displayName": "30 Day Low BP",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — 30 Day Low BP"
+        },
+        {
+          "slotKey": "s81_f3196",
+          "fieldId": 3196,
+          "displayName": "30 Day High Glucose",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — 30 Day High Glucose"
+        },
+        {
+          "slotKey": "s81_f3197",
+          "fieldId": 3197,
+          "displayName": "30 Day Low Glucose",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — 30 Day Low Glucose"
+        },
+        {
+          "slotKey": "s81_f1303",
+          "fieldId": 1303,
+          "displayName": "Ability to hear (with hearing aid or hearing appliances",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Ability to hear (with hearing aid or hearing appliances"
+        },
+        {
+          "slotKey": "s81_f1449",
+          "fieldId": 1449,
+          "displayName": "Abnormal movements:",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Abnormal movements:"
+        },
+        {
+          "slotKey": "s81_f3194",
+          "fieldId": 3194,
+          "displayName": "30 Day High BP67889",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — 30 Day High BP67889"
+        },
+        {
+          "slotKey": "s81_f913",
+          "fieldId": 913,
+          "displayName": "Abstraction",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Abstraction"
+        },
+        {
+          "slotKey": "s81_f3589",
+          "fieldId": 3589,
+          "displayName": "Abstraction Assessment",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Abstraction Assessment"
+        },
+        {
+          "slotKey": "s81_f1796",
+          "fieldId": 1796,
+          "displayName": "Active Problems",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Active Problems"
+        },
+        {
+          "slotKey": "s81_f1237",
+          "fieldId": 1237,
+          "displayName": "Activity Level and Severity",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Activity Level and Severity"
+        },
+        {
+          "slotKey": "s81_f312",
+          "fieldId": 312,
+          "displayName": "Abstract Reasoning SLW",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Abstract Reasoning SLW"
+        },
+        {
+          "slotKey": "s81_f1140",
+          "fieldId": 1140,
+          "displayName": "Acute Stress Disorder",
+          "fieldType": "text",
+          "variant": "",
+          "aiSummaryPrompt": "Labs — Acute Stress Disorder"
+        },
+        {
+          "slotKey": "s81_f1509",
+          "fieldId": 1509,
+          "displayName": "Addictions counseling",
+          "fieldType": "dropdown",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Addictions counseling"
+        },
+        {
+          "slotKey": "s81_f3861",
+          "fieldId": 3861,
+          "displayName": "Additional Comments:",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Additional Comments:"
+        },
+        {
+          "slotKey": "s81_f2000",
+          "fieldId": 2000,
+          "displayName": "Additional Historian for Patient:",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Additional Historian for Patient:"
+        },
+        {
+          "slotKey": "s81_f1251",
+          "fieldId": 1251,
+          "displayName": "Additional Information",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Labs — Additional Information"
+        }
+      ]
+    },
+    {
+      "sectionId": 33,
+      "sectionName": "Time Spent",
+      "fields": [
+        {
+          "slotKey": "s33_f1958",
+          "fieldId": 1958,
+          "displayName": "Total Time Spent in Counseling",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Time Spent — Total Time Spent in Counseling"
+        },
+        {
+          "slotKey": "s33_f793",
+          "fieldId": 793,
+          "displayName": "30-day Blood Sugar Review",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "Time Spent — 30-day Blood Sugar Review"
+        }
+      ]
+    },
+    {
+      "sectionId": 6,
+      "sectionName": "Assessment and Plan",
+      "fields": [
+        {
+          "slotKey": "s6_f50",
+          "fieldId": 50,
+          "displayName": "Assessment and Plan",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "\"Summarize the clinical Assessment and Plan section into a structured format, separating each diagnosis or problem. For each, include the assessment (clinical impression) and the plan (treatment, follow-up, tests, medications). Ensure the output is concise, clinically relevant, and easy to review by providers.\""
+        }
+      ]
+    },
+    {
+      "sectionId": 69,
+      "sectionName": "ACP updates ",
+      "fields": [
+        {
+          "slotKey": "s69_f1212",
+          "fieldId": 1212,
+          "displayName": "-tIf the pt has been screened for cognitive impairment,",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "ACP updates  — -tIf the pt has been screened for cognitive impairment,"
+        },
+        {
+          "slotKey": "s69_f3194",
+          "fieldId": 3194,
+          "displayName": "30 Day High BP67889",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "ACP updates  — 30 Day High BP67889"
+        },
+        {
+          "slotKey": "s69_f3196",
+          "fieldId": 3196,
+          "displayName": "30 Day High Glucose",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "ACP updates  — 30 Day High Glucose"
+        },
+        {
+          "slotKey": "s69_f3195",
+          "fieldId": 3195,
+          "displayName": "30 Day Low BP",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "ACP updates  — 30 Day Low BP"
+        }
+      ]
+    },
+    {
+      "sectionId": 342,
+      "sectionName": "AIMS",
+      "fields": [
+        {
+          "slotKey": "s342_f189",
+          "fieldId": 189,
+          "displayName": "ACP Update",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "AIMS — ACP Update"
+        },
+        {
+          "slotKey": "s342_f2134",
+          "fieldId": 2134,
+          "displayName": "ABD",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "AIMS — ABD"
+        },
+        {
+          "slotKey": "s342_f3183",
+          "fieldId": 3183,
+          "displayName": "ACO Metrics",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "AIMS — ACO Metrics"
+        }
+      ]
+    },
+    {
+      "sectionId": 26,
+      "sectionName": "AIMS Exam ",
+      "fields": [
+        {
+          "slotKey": "s26_f3796",
+          "fieldId": 3796,
+          "displayName": "AST:",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "AIMS Exam  — AST:"
+        },
+        {
+          "slotKey": "s26_f3797",
+          "fieldId": 3797,
+          "displayName": "ALT:",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "AIMS Exam  — ALT:"
+        }
+      ]
+    },
+    {
+      "sectionId": 281,
+      "sectionName": "AIMS Scale",
+      "fields": [
+        {
+          "slotKey": "s281_f1611",
+          "fieldId": 1611,
+          "displayName": "Note Type",
+          "fieldType": "text",
+          "variant": "Hard",
+          "aiSummaryPrompt": "AIMS Scale — Note Type"
+        },
+        {
+          "slotKey": "s281_f554",
+          "fieldId": 554,
+          "displayName": "Abdomen",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "AIMS Scale — Abdomen"
+        },
+        {
+          "slotKey": "s281_f1323",
+          "fieldId": 1323,
+          "displayName": "Abdomen Exam",
+          "fieldType": "text",
+          "variant": "Optional",
+          "aiSummaryPrompt": "AIMS Scale — Abdomen Exam"
+        },
+        {
+          "slotKey": "s281_f665",
+          "fieldId": 665,
+          "displayName": "Abdominal",
+          "fieldType": "text",
+          "variant": "Soft",
+          "aiSummaryPrompt": "AIMS Scale — Abdominal"
+        }
+      ]
+    }
+  ]
+}

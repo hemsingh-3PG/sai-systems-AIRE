@@ -1,0 +1,28 @@
+Section,Field,Field type,Options (dropdown / multi-choice),Unit,Important field?
+Vitals,Temperature,Number,,°F or °C (must be stated),Yes
+Vitals,Pulse,Number,,beats/min (standard; need not be stated),Yes
+Vitals,Respiratory rate,Number,,breaths/min (standard; need not be stated),Yes
+Vitals,Blood pressure,Text (e.g. 120/80),,mmHg (standard; need not be stated),Yes
+Vitals,Oxygen saturation,Number,,% (standard; need not be stated),Yes
+Vitals,Weight,Number,,kg or lb (must be stated),Yes
+Vitals,Height,Number,,cm or in (must be stated),No
+Vitals,Pain score,Dropdown,0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10,,No
+Chief Complaint,Reason for visit,Free text,,,No
+Chief Complaint,Onset,Text,,,No
+History,Past medical history,Free text,,,Yes
+History,Allergies,Free text,,,Yes
+History,Current medications,Free text,,,Yes
+History,Smoking status,Dropdown,Never | Former | Current | Unknown,,No
+History,Family history,Free text,,,No
+Review of Systems,Chest pain,Dropdown,Yes | No,,No
+Review of Systems,Shortness of breath,Dropdown,Yes | No | On exertion,,No
+Review of Systems,Edema,Dropdown,None | Trace | 1+ | 2+ | 3+ | 4+,,No
+Review of Systems,Cough,Dropdown,Yes | No,,No
+Review of Systems,Fall in last 30 days,Dropdown,Yes | No,,No
+Review of Systems,Date of fall,Date,,,No
+Functional Status,Mobility,Dropdown,Independent | Walker | Wheelchair | Bedbound,,No
+Functional Status,Diet,Multi-choice,Regular | Diabetic | Low sodium | Pureed | Thickened liquids,,No
+Functional Status,Code status,Dropdown,Full code | DNR | DNR/DNI | Comfort care,,Yes
+Assessment and Plan,Assessment,Free text,,,Yes
+Assessment and Plan,Plan,Free text,,,No
+Assessment and Plan,Follow-up,Text,,,No

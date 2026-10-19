@@ -1,0 +1,2 @@
+{"level":30,"time":1791448769508,"pid":26170,"hostname":"ndi-mb-366","module":"core.llm","deployment":"gpt-4.1","endpoint":"https://oai-3pillar-dev-eus2.openai.azure.com","msg":"initialising azure openai model"}
+{"level":30,"time":1791448813910,"pid":26170,"hostname":"ndi-mb-366","module":"pacehr.agents.model-call","runId":"manual-1791448774901","modelName":"gpt-4.1-2025-04-14","inputTokens":20859,"outputTokens":2831,"latencyMs":38998,"msg":"model call completed"}

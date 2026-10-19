@@ -1,0 +1,195 @@
+version: 1
+generated_by: AIRE_PRODUCT_OWNER
+generated_at: 2026-10-05
+
+# Epic 2 — Data Layer, AI Schema. Mirrors the PEA backlog's own numbering:
+# story 2.N maps to PEA-20N. Authoritative acceptance criteria live in
+# Other-Docs/Epic-02/epic-02-data-layer.md (Revision 8); the story files under
+# docs/plans/stories/ are pointers, not copies.
+#
+# Most of this epic is already built. `state` records that per story so the plan
+# is not read as work not yet started.
+
+team_size: 1
+# Solo. Waves still group independent stories so the next safe story can be
+# picked without manual dependency analysis.
+
+shared_files:
+  # Confirmed by the user, 2026-10-05. Sourced from the File/Module Boundary Map
+  # in docs/architecture/design/03-patterns-and-standards-brownfield.md.
+  # All of these already exist in the repo, so R1 (seed-wave rule) is a no-op:
+  # every overlap is a 3-way text merge, never create-vs-create.
+  - src/core/settings.ts              # every epic adds schema entries - most contended file
+  - src/core/database.ts              # every repository depends on its surface; additive only
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - tsconfig.build.json
+  - eslint.config.js
+  - tests/unit/env.ts                 # must name EVERY settings variable
+  - tests/unit/source-rules.test.ts   # guard rules + their planted violations
+  - migrations/sql/                   # numbered sequence - two stories choosing 0006 collide permanently
+  - migrations/verification/post-apply-checks.sql   # expected table count changes per table
+  - README.md                         # one row per dependency
+  - .env.example
+
+stories:
+  - id: 2.1
+    title: Create the AI schema via a forward-only migration mechanism
+    epic: 2
+    pea: PEA-201
+    jira: PEA-201
+    github: null
+    azure_devops: null
+    wave: 1
+    state: built
+    requires: []
+    enables: [2.2, 2.5, 2.6, 2.7]
+    files_touched:
+      - migrations/sql/0001_create_ai_schema.sql
+      - migrations/verification/post-apply-checks.sql
+      - src/core/databaseMigrations.ts
+      - src/migrate.ts
+      - tests/unit/core/databaseMigrations.test.ts
+      - tests/integration/core/databaseMigrations.test.ts
+      - package.json
+
+  - id: 2.2
+    title: Record one append-only AI.agentRun row per invocation
+    epic: 2
+    pea: PEA-202
+    jira: PEA-202
+    github: null
+    azure_devops: null
+    wave: 2
+    state: built
+    requires: [2.1]
+    enables: [2.3]
+    files_touched:
+      - migrations/sql/0002_create_agent_run.sql
+      - src/repositories/agentRunWriter.ts
+      - tests/unit/repositories/agentRunWriter.test.ts
+
+  - id: 2.5
+    title: Store versioned prompt fragments in AI.promptFragment, admin-write only
+    epic: 2
+    pea: PEA-205
+    jira: PEA-205
+    github: null
+    azure_devops: null
+    wave: 2
+    state: built            # D11 settled 2026-10-06: sentinel 0 + plain UNIQUE (ADR-05 option A)
+    requires: [2.1]
+    enables: []
+    files_touched:
+      - migrations/sql/0006_create_prompt_fragment.sql
+      - src/repositories/promptFragmentRepository.ts
+      - tests/unit/repositories/promptFragmentRepository.test.ts
+      - tests/integration/repositories/promptFragmentRepository.test.ts
+
+  - id: 2.6
+    title: Store per-mapping field guards in AI.fieldConstraint, admin-write only
+    epic: 2
+    pea: PEA-206
+    jira: PEA-206
+    github: null
+    azure_devops: null
+    wave: 2
+    state: built
+    requires: [2.1]
+    enables: []
+    files_touched:
+      - migrations/sql/0004_create_field_constraint.sql
+      - src/repositories/fieldConstraintRepository.ts
+      - tests/unit/repositories/fieldConstraintRepository.test.ts
+
+  - id: 2.7
+    title: Store the per-mapping field description in AI.fieldDescription, admin-write only
+    epic: 2
+    pea: PEA-207
+    jira: PEA-207
+    github: null
+    azure_devops: null
+    wave: 2
+    state: built
+    requires: [2.1]
+    enables: []
+    files_touched:
+      - migrations/sql/0005_create_field_description.sql
+      - src/repositories/fieldDescriptionRepository.ts
+      - tests/unit/repositories/fieldDescriptionRepository.test.ts
+
+  - id: 2.3
+    title: Store the AI's proposal beside the clinician's decision in AI.fieldOutcome
+    epic: 2
+    pea: PEA-203
+    jira: PEA-203
+    github: null
+    azure_devops: null
+    wave: 3
+    state: built            # accepted-value columns have no writer - R1/M4/D7
+    requires: [2.1, 2.2]    # FK_fieldOutcome_agentRun needs AI.agentRun to exist
+    enables: [2.4]
+    files_touched:
+      - migrations/sql/0003_create_field_outcome.sql
+      - src/repositories/fieldOutcomeRepository.ts
+      - tests/unit/repositories/fieldOutcomeRepository.test.ts
+
+  - id: 2.4
+    title: Purge AI.fieldOutcome rows past the configured retention window
+    epic: 2
+    pea: PEA-204
+    jira: PEA-204
+    github: null
+    azure_devops: null
+    wave: 4
+    state: next             # mechanism is buildable; the retention NUMBER is blocked on D4
+    requires: [2.3]
+    enables: []
+    files_touched:
+      - src/repositories/fieldOutcomeRetention.ts
+      - src/core/settings.ts
+      - tests/unit/env.ts
+      - tests/unit/repositories/fieldOutcomeRetention.test.ts
+      - .env.example
+
+waves:
+  - wave: 1
+    stories: [2.1]
+    assignments:
+      - dev: 1
+        stories: [2.1]
+
+  - wave: 2
+    stories: [2.2, 2.5, 2.6, 2.7]
+    assignments:
+      - dev: 1
+        stories: [2.2, 2.5, 2.6, 2.7]
+
+  - wave: 3
+    stories: [2.3]
+    assignments:
+      - dev: 1
+        stories: [2.3]
+
+  - wave: 4
+    stories: [2.4]
+    assignments:
+      - dev: 1
+        stories: [2.4]
+
+# Step 7 validation, performed manually 2026-10-05:
+#
+# 1. Seed-wave check ...... PASS. Wave 1 holds one story. Every shared_files entry
+#                           already exists in the repo, so R1 is a no-op.
+# 2. Disjoint-files ....... PASS. Wave 2's four stories touch disjoint migration
+#                           scripts, repositories and tests. Their only overlaps are
+#                           migrations/sql/ and post-apply-checks.sql, both in
+#                           shared_files. Waves 3 and 4 hold one story each.
+# 3. Wave consistency ..... PASS. Every story's wave field matches the waves: block.
+# 4. Requires resolution .. PASS. 2.1, 2.2, 2.3 all exist in stories:.
+#
+# Note on migration numbering: migrations/sql/ is in shared_files precisely because
+# the sequence is forward-only. A merged number can never be reused, so two stories
+# in the same wave must have their numbers allocated before either is written.
+# Wave 2's allocation is already spent: 0002, 0004, 0005 built; 0006 reserved for 2.5.
