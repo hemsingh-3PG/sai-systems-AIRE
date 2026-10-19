@@ -17,7 +17,7 @@
 This file is a **pointer**. The User Story, Business Context, Gherkin Acceptance Criteria,
 Technical Considerations and Definition of Done for PEA-203 live in:
 
-> **`Other-Docs/Epic-02/epic-02-data-layer.md`** → section **`PEA-203 — Store the AI's proposal beside the clinician's decision in AI.fieldOutcome`** (Revision 8, 2026-10-05)
+> **`dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md`** → section **`PEA-203 — Store the AI's proposal beside the clinician's decision in AI.fieldOutcome`** (Revision 8, 2026-10-05)
 
 Read that section before implementing or reviewing. **When this file and the epic doc disagree, the
 epic doc wins.** This file adds only the planning metadata above and the notes below.

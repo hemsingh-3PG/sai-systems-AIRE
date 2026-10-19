@@ -10,7 +10,7 @@
 - `docs/requirements.md` (rev. 2026-10-05)
 - `docs/architecture/design/02-target-architecture-brownfield.md`
 - `docs/architecture/design/03-patterns-and-standards-brownfield.md`
-- `Other-Docs/Epic-02/epic-02-data-layer.md` (Revision 8) — **authoritative acceptance criteria**
+- `dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md` (Revision 8) — **authoritative acceptance criteria**
 
 ---
 
@@ -18,7 +18,7 @@
 
 **The story files under `docs/plans/stories/` are pointers, not copies.** The authoritative
 description, Gherkin acceptance criteria, DDL and Definition of Done for every story in this plan
-live in `Other-Docs/Epic-02/epic-02-data-layer.md`, which is actively maintained and at Revision 8.
+live in `dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md`, which is actively maintained and at Revision 8.
 
 Each AIRE story file carries the planning metadata that document does not — wave, requires/enables,
 files touched, pattern references, current build state — and cites the epic doc for everything else.
@@ -131,7 +131,7 @@ No existing clinical table is altered, dropped or written to.
 | 2.7 | PEA-207 | Store the per-mapping description in `AI.fieldDescription` | 2 | 3 | ✅ Built |
 
 Full story detail: `docs/plans/stories/epic-2-story-2.N-*.md` → each citing
-`Other-Docs/Epic-02/epic-02-data-layer.md`.
+`dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md`.
 
 ---
 

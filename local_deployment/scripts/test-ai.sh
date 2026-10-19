@@ -19,7 +19,7 @@ for a in "$@"; do
 done
 
 podman_ready || die "Podman is not running. Run ./scripts/preflight.sh ai first."
-[ -n "$AI_REPO_ABS" ] || die "AI repo not found at: $(_resolve "$AI_REPO")  (fix AI_REPO in config.env)"
+[ -n "$AI_REPO_ABS" ] || die "AI repo not found at: $(_resolve "$AI_REPO")  (clone it next to sai-systems-AIRE, or set AI_REPO in config.local.env)"
 
 step "Building AI test image → $AI_TEST_IMAGE"
 podman build \

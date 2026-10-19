@@ -1,7 +1,7 @@
 # Project Status
 
-**Last Updated**: 2026-10-06 08:10
-**Updated By**: REVIEWER
+**Last Updated**: 2026-10-19 15:00
+**Updated By**: ARCHITECT
 **Overall Status**: 🟡 IN PROGRESS
 
 ---
@@ -20,8 +20,8 @@
 
 | Step | Status | Owner | Updated | Evidence | Recorded |
 |------|--------|-------|---------|----------|----------|
-| System Discovery | ✅ Done (refreshed) | AIRE_ARCHITECT | 2026-09-30 | `docs/architecture/current/00-system-overview.md` | 2026-09-30 |
-| Deep-Dive | ✅ Done (refreshed) | AIRE_ARCHITECT | 2026-09-30 | `docs/architecture/current/01-…` through `12-…-deep-dive.md` (12 modules, 42 diagrams) | 2026-09-30 |
+| System Discovery | ✅ Done (refreshed, user-confirmed) | AIRE_ARCHITECT | 2026-10-19 | `docs/architecture/current/00-system-overview.md` (3 repos incl. `pacEHR_AI`) | 2026-10-19 12:00 |
+| Deep-Dive | ✅ Done (full refresh + module 13) | AIRE_ARCHITECT | 2026-10-19 | `docs/architecture/current/01-…` through `13-pacehr-ai-service-deep-dive.md` (13 modules, 64 diagrams) | 2026-10-19 15:00 |
 | Requirements | ✅ Done | AIRE_ANALYST_PM | 2026-10-05 | `docs/requirements.md` (Epic 02 scope) | 2026-10-05 17:05 |
 | Target Architecture | ✅ Done | AIRE_ARCHITECT | 2026-10-05 | `docs/architecture/design/02-target-architecture-brownfield.md` | 2026-10-05 17:40 |
 | Patterns | ✅ Done | AIRE_ARCHITECT | 2026-10-05 | `docs/architecture/design/03-patterns-and-standards-brownfield.md` | 2026-10-05 18:05 |
@@ -33,7 +33,91 @@
 
 ## Current Step Details
 
-### Deep-Dive — Full System Refresh (2026-09-30)
+### System Discovery — Refresh 2 (2026-10-19)
+
+**Owner**: ARCHITECT
+**Status**: ✅ Done — user confirmed 2026-10-19
+**Scope**: `PacEHR`, `pacEHR_API`, `pacEHR_AI` (user-specified); outputs written only under `saiystems-AIRE/docs/`
+**Analysed at HEAD**: `PacEHR` = 401caa134 (detached, `3p-dev/AITP-117-…`), `pacEHR_API` = 0f611f65c (`PacEHR-DevelopAPI-Main`), `pacEHR_AI` = ef172ea (`3p-dev/epic-05-Guardrails`). All three trees clean.
+**Drift since 2026-09-30**: 432 commits (212 UI + 179 API + 41 AI)
+
+**Progress**:
+- [x] Phase 0 — Reference check: `SPEC/references/` empty (two empty folders); no `docs/helix/INDEX.md`; helix MCP needs authorization, not used ✅
+- [x] Phase 1 — Initial scan ✅
+- [x] Phase 2 — Technology analysis ✅
+- [x] Phase 3 — Architecture mapping (3 Mermaid diagrams) ✅
+- [x] Phase 4 — `docs/architecture/current/00-system-overview.md` rewritten ✅
+- [x] Phase 5 — `docs/architecture-diagrams/00-system-overview-diagrams.md` rewritten (3 diagrams; **not render-tested** — no local Mermaid renderer was available) ✅
+- [x] Phase 6 — status.md updated ✅
+- [x] User confirmation of the overview ✅ (open questions waived by the user: accepted as-is)
+
+**Headline changes**: `pacEHR_AI` is now a real Node 22 / LangChain / Azure OpenAI service (~1,950 lines, 39 test files, 10 migrations, eval gate) but has a health-only HTTP surface and **no caller in the SPA or API**. Dragon Copilot dictation added (SPA service, `webUiToken` endpoint, `usp_GetDragonSubByUserId`). API 100 controllers / ~1,039 endpoints; backend unit tests 3,408.
+
+**Open questions raised**:
+1. The 2026-10-06 entries below name AI-schema objects (`agentRun`, `fieldOutcome`, `fieldConstraint`, `promptFragment`) that do not exist among the 10 migrations on `epic-05-Guardrails`. Is that work on another branch?
+2. Is the `AI` schema in the same Azure SQL database as the PacEHR schema? (inferred from settings only)
+3. Should findings 1–12 (below) be re-verified now? They are carried forward, not re-checked.
+
+**Corrections to the 2026-09-30 overview**: `IDRFirstServices` is registered three times, not twice; `PacEHR.API/Hubs/` does contain two hub classes (no `MapHub` in `Program.cs`).
+
+**No code was modified.** Prior versions backed up to the session scratchpad.
+
+> Deep-dive refresh completed the same day — see the entry below.
+
+---
+
+### Deep-Dive — Full System Refresh 2 + Module 13 (2026-10-19)
+
+**Owner**: ARCHITECT
+**Status**: ✅ Done (documents are Draft — awaiting user confirmation of each)
+**Scope**: full system — all 12 existing modules re-analysed, plus new module 13 (`pacEHR_AI` service), at `PacEHR` = 401caa134, `pacEHR_API` = 0f611f65c, `pacEHR_AI` = ef172ea
+**Method**: 7 parallel analysis agents, one or two modules each; the architect verified diagram parity (every deep-dive diagram byte-identical in its preview file) and dates. No renderer was available, so Mermaid syntax is **not render-tested**. **No code was modified.**
+
+**Progress**:
+- [x] Phase 1 — Module analysis ✅  - [x] Phase 2 — Flow analysis ✅  - [x] Phase 3 — Data analysis ✅
+- [x] Phase 4 — Pattern extraction (DO/DON'T with file:line) ✅
+- [x] Phase 5 — 13 deep-dive documents written ✅
+- [x] Phase 6 — 13 diagram-preview files written; 64 diagrams, parity verified ✅
+- [x] Phase 7 — status.md updated ✅
+
+| # | Module | Document | Diagrams |
+|---|---|---|---|
+| 1 | Auth, identity & tenancy | `01-auth-identity-tenancy-deep-dive.md` | 5 |
+| 2 | API request & data spine | `02-api-request-data-spine-deep-dive.md` | 4 |
+| 3 | Data & SQL tier | `03-data-sql-tier-deep-dive.md` | 4 |
+| 4 | PointClickCare integration | `04-pointclickcare-integration-deep-dive.md` | 5 |
+| 5 | Interoperability (FHIR/CCDA/QRDA) | `05-interoperability-fhir-ccda-qrda-deep-dive.md` | 5 |
+| 6 | HL7 v2 & ADT ingestion | `06-hl7-adt-ingestion-deep-dive.md` | 4 |
+| 7 | Other external integrations | `07-external-integrations-deep-dive.md` | 4 |
+| 8 | Background processing | `08-background-processing-deep-dive.md` | 5 |
+| 9 | SPA shell & navigation | `09-spa-shell-navigation-deep-dive.md` | 5 |
+| 10 | SPA feature areas | `10-spa-feature-areas-deep-dive.md` | 6 |
+| 11 | Test infrastructure & CI/CD | `11-test-infrastructure-cicd-deep-dive.md` | 4 |
+| 12 | AI assistance & dictation (legacy path + Dragon Copilot) | `12-ai-assistance-deep-dive.md` | 5 |
+| 13 | **pacEHR_AI service (new)** | `13-pacehr-ai-service-deep-dive.md` | 8 |
+
+`12a-…` and `12b-…` banners changed from STALE to PARTLY STALE (legacy content unchanged since 2026-09-10; no Dragon / `pacEHR_AI` coverage).
+
+**Corrections to the 2026-09-30 findings table** (re-verified against code):
+- Finding 1 (`/speechToText`): still anonymous, but the four query-string ids are never used and nothing is persisted — the "forged transcript on any patient's chart" claim is **dropped**; cost and unbounded memory remain.
+- Finding 5: only `saveADTMessage` is anonymous; `sigmaCareADTEndPoint` / `sigmaCareCCDEndpoint` need an encrypted `token` header.
+- Finding 6: 22 Service Bus send methods (not 18); zero receivers in the three repos, but `HIEController.cs:55-58` names an out-of-workspace consumer.
+- Finding 12: the "190 backup tables / 88 procs" figures could not be reproduced (re-count 122–173 tables, 62–79 procs depending on method).
+- Findings 2, 3, 4, 7, 8, 10 still hold (3 and 4 re-confirmed; 4's `GetHeaders()` sites rose 126 → 156). Module 02: the 928 EF entity files are `Compile Remove`d — not compiled.
+
+**New findings this pass** (details in the module docs):
+- 🔴 **Dragon Copilot RSA private key committed in all 6 `appsettings.<Env>.json` including Production** (first in `4fcacd350`, PAC-584); the matching public key is published anonymously at `/.well-known/jwks.json` (Module 12). Candidate for `aire-raise-defect`.
+- Service Bus connection strings with `RootManageSharedAccessKey` in 6 tracked appsettings files (Module 06).
+- 548 backend tests in 46 files are excluded from compilation (`Compile Remove="DomainServices\**"`), so they never run (Module 11).
+- DrFirst poller likely throws every run: `EveryFiveMinutesFunction.cs` parses an empty string (Module 08).
+- Datadog RUM sends staff name, email and role (Module 09).
+- `pacEHR_AI` (Module 13): nothing calls the agent; no audit row is written anywhere; `[AI].[usp_getActiveClinicianSummary]` is called but created by no migration; migration runner has no history table (re-runs all scripts, rejects `ALTER TABLE`); the last passing eval does not cover HEAD (`ef172ea` code hash not in `history.jsonl`); a `FOUND` slot with an empty value is banded HIGH; tenancy ids are caller-asserted.
+
+**Unverified items are marked "carried, not re-verified" in each module.**
+
+---
+
+### Deep-Dive — Full System Refresh (2026-09-30 — superseded)
 
 **Owner**: ARCHITECT
 **Status**: ✅ Done
@@ -76,7 +160,7 @@ Supplements `12a-ai-request-payload-reference.md` and `12b-ai-prompt-examples.md
 
 ---
 
-### 🔴 Findings requiring a decision before requirements
+### 🔴 Findings requiring a decision before requirements (2026-09-30; corrections listed in the 2026-10-19 entry above)
 
 Raised by this pass; each is evidence-based and cited in the linked module.
 
@@ -184,6 +268,15 @@ Items 1, 2, 3 and 9 are remediation rather than design and are candidates for `a
 
 ## Completed Steps
 
+- [x] **Deep-Dive (Full System Refresh 2 + Module 13)**: Done — 2026-10-19
+  - Scope: all 12 modules re-analysed + new module 13 (`pacEHR_AI`) at `PacEHR` = 401caa134, `pacEHR_API` = 0f611f65c, `pacEHR_AI` = ef172ea
+  - Evidence: `docs/architecture/current/01-…` through `13-pacehr-ai-service-deep-dive.md`
+  - Diagrams: `docs/architecture-diagrams/01-…` through `13-…-diagrams.md` (64 Mermaid diagrams; parity verified, not render-tested)
+  - No code modified
+- [x] **System Discovery (Refresh 2)**: Done — 2026-10-19 — user confirmed
+  - Evidence: `docs/architecture/current/00-system-overview.md` (full rewrite, three repos, delta table vs 2026-09-30)
+  - Diagrams: `docs/architecture-diagrams/00-system-overview-diagrams.md` (3 Mermaid diagrams)
+  - Analysed at HEAD `PacEHR` = 401caa134, `pacEHR_API` = 0f611f65c, `pacEHR_AI` = ef172ea; no code modified
 - [x] **System Discovery**: Done — 2026-09-08
   - Evidence: `docs/architecture/current/00-system-overview.md` (corrected + addendum added after deep-dive)
   - Diagrams: `docs/architecture-diagrams/00-system-overview-diagrams.md`
@@ -561,6 +654,8 @@ Items 1, 2, 3 and 9 are remediation rather than design and are candidates for `a
 
 ## Upcoming
 
+**Next (2026-10-19):** user confirmation of the 13 deep-dives, then `aire-brownfield-requirements`.
+
 **Epic 02's build-and-review cycle is complete for every buildable story.** What remains is not
 engineering:
 
@@ -615,7 +710,7 @@ Optional, in scope given the findings: `aire-raise-defect` for the operational/s
 
 | Agent | Last Action | Status | Updated | Recorded |
 |-------|------------|--------|---------|----------|
-| ARCHITECT | Patterns & standards agreed for `PacEHR_AI` | Idle | 2026-10-05 | 2026-10-05 18:05 |
+| ARCHITECT | Deep-dive full refresh + module 13 (13 modules, 64 diagrams) — awaiting user confirmation | Idle | 2026-10-19 | 2026-10-19 15:00 |
 | ANALYST_PM | Requirements generated for Epic 02 (PEA-201…207) | Idle | 2026-10-05 | 2026-10-05 17:05 |
 | PRODUCT_OWNER | Implementation plan + dependency graph for Epic 2 | Idle | 2026-10-05 | 2026-10-05 18:35 |
 | BUILD_CYCLE_PLANNER | — | Standby | — | 2026-09-08 18:23 |

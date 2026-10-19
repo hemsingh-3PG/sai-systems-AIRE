@@ -4,7 +4,7 @@ generated_at: 2026-10-05
 
 # Epic 2 — Data Layer, AI Schema. Mirrors the PEA backlog's own numbering:
 # story 2.N maps to PEA-20N. Authoritative acceptance criteria live in
-# Other-Docs/Epic-02/epic-02-data-layer.md (Revision 8); the story files under
+# dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md (Revision 8); the story files under
 # docs/plans/stories/ are pointers, not copies.
 #
 # Most of this epic is already built. `state` records that per story so the plan

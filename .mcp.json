@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "atlassian-rovo": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.atlassian.com/v1/mcp"
+      ]
+    },
+    "helix": {
+      "type": "http",
+      "url": "https://helix-mcp.3pillarglobal.com/helix-atlas/mcp",
+      "oauth": {
+        "clientId": "helix-local-mcp-agent",
+        "callbackPort": 8765
+      },
+      "headers": {
+        "x-solution-id": "954"
+      }
+    },
+    "MCPSaiSystem": {
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    }
+  }
+}

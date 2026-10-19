@@ -1,1 +1,0 @@
-POST https://oai-3pillar-dev-eus2.openai.azure.com/openai/deployments/gpt-4.1/chat/completions?api-version=2025-01-01-preview

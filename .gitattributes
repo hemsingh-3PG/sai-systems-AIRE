@@ -1,0 +1,3 @@
+# AIRE: concatenate both sides of a conflicting hunk in the append-only status file
+# (built-in git driver, no install). aire-pr-generator repairs any duplication before a PR.
+docs/status.md merge=union

@@ -18,19 +18,19 @@ fi
 ok "podman machine is running"
 
 if wants api; then
-  [ -n "$API_REPO_ABS" ] || die "API repo not found at: $(_resolve "$API_REPO")  (fix API_REPO in config.env)"
+  [ -n "$API_REPO_ABS" ] || die "API repo not found at: $(_resolve "$API_REPO")  (clone it next to sai-systems-AIRE, or set API_REPO in config.local.env)"
   [ -f "$API_REPO_ABS/PacEHR.API/PacEHR.API.csproj" ] || die "$API_REPO_ABS does not look like the pacEHR_API repo"
   ok "API repo:  $API_REPO_ABS"
 fi
 
 if wants web; then
-  [ -n "$WEB_REPO_ABS" ] || die "web repo not found at: $(_resolve "$WEB_REPO")  (fix WEB_REPO in config.env)"
+  [ -n "$WEB_REPO_ABS" ] || die "web repo not found at: $(_resolve "$WEB_REPO")  (clone it next to sai-systems-AIRE, or set WEB_REPO in config.local.env)"
   [ -f "$WEB_REPO_ABS/angular.json" ] || die "$WEB_REPO_ABS does not look like the PacEHR frontend repo"
   ok "web repo:  $WEB_REPO_ABS"
 fi
 
 if wants ai; then
-  [ -n "$AI_REPO_ABS" ] || die "AI repo not found at: $(_resolve "$AI_REPO")  (fix AI_REPO in config.env)"
+  [ -n "$AI_REPO_ABS" ] || die "AI repo not found at: $(_resolve "$AI_REPO")  (clone it next to sai-systems-AIRE, or set AI_REPO in config.local.env)"
   [ -f "$AI_REPO_ABS/package.json" ] || die "$AI_REPO_ABS does not look like the PacEHR_AI repo"
   [ -f "$AI_REPO_ABS/src/server.ts" ] && [ -f "$AI_REPO_ABS/tsconfig.build.json" ] \
     || die "$AI_REPO_ABS has no src/server.ts + tsconfig.build.json — check out PacEHR-AI-Develop-Main (the TypeScript layout)"

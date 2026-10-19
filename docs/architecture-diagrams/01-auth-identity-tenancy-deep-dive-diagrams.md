@@ -1,15 +1,12 @@
-# PacEHR — Auth, Identity & Tenancy Diagrams
+# PacEHR - Auth, Identity & Tenancy Diagrams
 
-**Date**: 2026-09-30
+**Date**: 2026-10-19
 **Source**: `docs/architecture/current/01-auth-identity-tenancy-deep-dive.md`
-**Produced by**: ARCHITECT (`aire-brownfield-deep-dive`, Phase 6)
-**Audience**: BA / Product / anyone who wants the pictures without the prose
+**Status**: Draft (awaiting user confirmation)
 
 ---
 
-## 1. Login — password to opaque session token
-
-How a user signs in, how the password is checked, and where the session token comes from.
+## 1. Workflow 1: Login (password to opaque session token)
 
 ```mermaid
 sequenceDiagram
@@ -21,68 +18,70 @@ sequenceDiagram
   participant DB as SQL Server
 
   U->>MW: POST /verifyUser (AES body, no token header)
-  Note over MW: [AllowAnonymous] → skip auth,<br/>but body still decrypted first
+  Note over MW: AllowAnonymous so auth is skipped,<br/>but the body is still decrypted first
   MW->>C: forward
   C->>S: verifyUser(email, password)
   S->>DB: usp_verifyUser(@email)
   DB-->>S: user row incl. PasswordHash
-  alt MustResetPassword OR legacy $2 BCrypt hash
+  alt MustResetPassword OR legacy BCrypt hash
     S-->>C: MustResetPassword = true
-    C-->>U: 200 status MustReset
+    C-->>U: 200 flag MustReset, empty token
   else
     S->>P: Verify(password, hash, staticSalt)
     P-->>S: bool (FixedTimeEquals)
   end
-  C->>C: token = Guid.NewGuid()
-  C->>S: setDatabaseSession(userId, email, accountId, accountName, token)
-  S->>DB: usp_InsertSession(...)
-  C-->>U: 200 result + token + isIPActive + VideoCallURL
+  alt active, unlocked, DaysSinceLastLogin at most 14
+    C->>C: token = Guid.NewGuid()
+    C->>S: setDatabaseSession(userId, email, accountId, accountName, token)
+    S->>DB: usp_InsertSession(...)
+    C-->>U: 200 result + token + isIPActive + VideoCallURL
+  else inactive 14 days or more
+    C-->>U: 200 flag Expired, empty token
+  end
 ```
 
----
-
-## 2. Every authenticated request
-
-The middleware pipeline each call passes through — and the point where controllers stop using the identity the middleware derived.
+## 2. Workflow 2: Every authenticated request
 
 ```mermaid
 sequenceDiagram
   participant U as Browser
   participant FH as ForwardedHeaders
-  participant AU as AuditMiddleware
+  participant EH as ErrorHandleMiddelware (only if ErrorLogMode 1)
+  participant AU as AuditMiddleware (only if AuditMode 1)
   participant MW as JWTMiddleware
   participant DB as SQL Server
   participant CT as Controller
 
   U->>FH: POST /getPatientById<br/>headers token accountID userID accountName (all AES)
-  FH->>AU: X-Forwarded-For honoured
-  AU->>MW: (if AuditMode==1)
-
-  Note over MW: 1. if path not excluded:<br/>buffer body, if no brace then AES-decrypt
+  FH->>EH: X-Forwarded-For honoured
+  EH->>AU: pass
+  AU->>MW: audit written first, then next
+  Note over MW: 1. if path not in excludedPaths:<br/>buffer body, if no brace then AES-decrypt
   Note over MW: 2. AllowAnonymous then pass through
   MW->>MW: token = headers token<br/>CryptoHelper.Decrypt(token, SecretKey123)
   alt token contains Bearer
     MW->>DB: usp_getAPIAccessToken(token)
-    Note over MW: only for /downloadxmlfile or fhir<br/>otherwise 401
+    Note over MW: only for /downloadxmlfile or fhir paths,<br/>otherwise 401
   else opaque GUID
-    MW->>DB: usp_saveUserTokens(token, empty)
+    MW->>DB: usp_saveUserTokens(token, empty accountName)
     DB-->>MW: authorizationStatus userId accountId accountName email
     alt Unauthorized
       MW-->>U: 401 status F errorCode 401
     else
-      MW->>MW: HttpContext.Items userId accountId
+      MW->>MW: HttpContext.Items userId accountId accountName email
     end
   end
   MW->>CT: next()
-  Note over CT: controller calls GetHeaders(),<br/>reading identity from CLIENT headers,<br/>not from HttpContext.Items
-  CT->>DB: proc(accountId from header, ...)
+  alt legacy majority (156 call sites)
+    Note over CT: GetHeaders() reads identity from CLIENT headers
+    CT->>DB: proc(accountId from header, ...)
+  else newer endpoints (PAC-1388/1389/1392/1317)
+    Note over CT: AuthenticatedUserId() reads Items userId,<br/>CallerIsMemberOf checks role in header account
+    CT->>DB: proc(userId from session, accountId from header after membership check)
+  end
 ```
 
----
-
-## 3. Session lifetime
-
-Why sessions last 50 hours from login rather than sliding with activity, and why logout leaves the token usable.
+## 3. Workflow 3: Session lifetime
 
 ```mermaid
 stateDiagram-v2
@@ -94,25 +93,22 @@ stateDiagram-v2
   Active --> Orphaned: user logs out
   note right of Orphaned
     No DELETE against Account.session exists
-    anywhere in the SSDT project. Rows
+    anywhere in the SSDT project. logOutRedirect
+    only logs and returns a body. Rows
     accumulate and the token stays valid
     until the 3000-minute window lapses.
   end note
   note right of Active
     The sliding-expiry UPDATE filters on
-    token AND accountName, but both callers
-    pass accountName = empty string. The
+    token AND accountName, but the middleware
+    passes accountName = empty string. The
     UPDATE matches 0 rows, so lastLogin is
     never refreshed: expiry is absolute,
     not sliding.
   end note
 ```
 
----
-
-## 4. FHIR / external client
-
-The path an external FHIR caller takes — and the scope-checking filter that is never invoked.
+## 4. Workflow 4: FHIR / external client
 
 ```mermaid
 sequenceDiagram
@@ -122,14 +118,35 @@ sequenceDiagram
   participant F as Fhir Controller
 
   X->>MW: GET /fhir/Patient with Authorization Bearer jwt
-  Note over MW: path /fhir is excluded,<br/>body decryption skipped
+  Note over MW: excludedPaths is exact match on /fhir,<br/>so /fhir/Patient is not excluded.<br/>A GET has no body so decryption is a no-op
   MW->>MW: token = Authorization header<br/>CryptoHelper.Decrypt(token, SecretKey123)
-  Note over MW: a real Bearer JWT is not AES ciphertext,<br/>so decrypt throws and returns 401
-  MW->>DB: usp_getAPIAccessToken(token) if decrypt succeeded
+  Note over MW: a real Bearer JWT is not AES ciphertext,<br/>so decrypt throws and the response is 401
+  MW->>DB: usp_getAPIAccessToken(token) only if decrypt succeeded
   MW->>F: next()
   Note over F: FhirAuthenticationAttribute is NOT applied.<br/>No scope checking runs.
 ```
 
----
+## 5. Data Models
 
-**Full analysis**: `docs/architecture/current/01-auth-identity-tenancy-deep-dive.md`
+```mermaid
+erDiagram
+  USERS ||--o{ SESSION : "userId, no FK"
+  ACCOUNTS ||--o{ SESSION : "accountId, no FK"
+  USERS }o--o{ ROLES : "via user role rows"
+  SESSION {
+    int sessionId PK
+    int userId
+    varchar email
+    int accountId
+    varchar accountName
+    varchar token
+    datetime lastLogin
+  }
+  ROLES {
+    int roleID PK
+    varchar roleName
+    int isActive
+    varchar reportIds
+    nvarchar abbreviation
+  }
+```

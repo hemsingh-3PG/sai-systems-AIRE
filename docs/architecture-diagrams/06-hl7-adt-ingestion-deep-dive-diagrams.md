@@ -1,104 +1,98 @@
 # PacEHR — HL7 v2, ADT Ingestion & Messaging Diagrams
 
-**Date**: 2026-09-30
+**Date**: 2026-10-19
 **Source**: `docs/architecture/current/06-hl7-adt-ingestion-deep-dive.md`
-**Produced by**: ARCHITECT (`aire-brownfield-deep-dive`, Phase 6)
+**Produced by**: ARCHITECT (`aire-brownfield-deep-dive`, refresh)
+**Status**: Draft (awaiting user confirmation)
 **Audience**: BA / Product / anyone who wants the pictures without the prose
 
 ---
 
-## 1. Inbound ADT — audit-first ingestion
-
-The raw HL7 message is persisted before anything that can fail. Note the endpoint is unauthenticated, and the queue has no consumer in either repository.
+## 1. Inbound ADT: audit-first ingestion
 
 ```mermaid
 sequenceDiagram
-  participant EXT as External system (MatrixCare / SigmaCare)
+  participant EXT as External system (MatrixCare)
   participant MW as JWTMiddleware
   participant CT as MatrixCareController.saveADTMessage
   participant SVC as MatrixCareServices
   participant DB as SQL MatrixCare.usp_ProcessAudit_Insert
   participant SB as Azure Service Bus matrixcare-hl7
-  participant ZZZ as ??? consumer
+  participant ZZZ as consumer (not in workspace)
 
   EXT->>MW: POST /saveADTMessage (raw HL7 v2 body)
-  Note over MW: /saveADTMessage is in excludedPaths<br/>→ no body decryption
-  Note over MW: [AllowAnonymous] → no authentication
+  Note over MW: AllowAnonymous so the token check is skipped<br/>(path is also in excludedPaths: no body decrypt)
   MW->>CT: forward
   CT->>CT: read raw body from Request.Body
   CT->>SVC: saveProcessAudit("RealtimeWebhook", body)
   SVC->>DB: persist raw HL7, return processAuditId
   DB-->>CT: processAuditId
-  CT->>SB: SendMatrixCareHL7MessageAsync(processAuditId + message)
-  CT-->>EXT: 200 status Y successfully
-  SB-->>ZZZ: no consumer exists in either repository
+  CT->>SB: SendMatrixCareHL7MessageAsync({processAuditId, responseMessage}, "matrixcare-hl7")
+  CT-->>EXT: 200 { status Y, msg successfully }
+  SB-->>ZZZ: no receiver exists in any of the three repositories
+  Note over CT,EXT: any failure is logged to MatrixCare.Error_Exception<br/>and returned as 404 F Not Found
 ```
 
 ---
 
 ## 2. Outbound HL7
 
-Outbound queueing is table-based, not Service Bus — a different mechanism from the inbound path.
-
 ```mermaid
 sequenceDiagram
   participant UI as SPA / trigger
   participant CT as HL7OutboundController
   participant SVC as HL7OutboundServices
-  participant DB as SQL
-  participant Q as HL7OutboundMessageQueue table
-  participant H as Hl7Helper
+  participant DB as SQL usp_insertHl7outboundprocessing
+  participant Q as Hl7outboundprocessing / HL7OutboundMessageQueue tables
   participant EXT as External target
 
-  UI->>CT: POST /triggerHL7Outbound
-  CT->>SVC: insertHL7ProcessingParameters(patientId, encounterId, externalTarget, userId, accountId, docType)
-  SVC->>DB: proc writes a work item
-  DB->>Q: row queued
-  Note over Q,H: processing driven from the DB queue table
-  H->>H: GetHL7Format / GetHL7Format1 / GetHL7Format2<br/>using HL7_HL7SegmentFieldMapping rows
-  H->>EXT: message dispatched
+  UI->>CT: POST /triggerHL7Outbound (patientId, encounterId, externalTarget, userId, accountId, docType)
+  CT->>SVC: insertHL7ProcessingParameters(...)
+  SVC->>DB: EXEC usp_insertHl7outboundprocessing
+  DB->>Q: work item queued
+  Note over Q,EXT: no reader of these tables or of their procedures<br/>exists in pacEHR_API C# code; the dispatcher is outside this workspace
+  Q-->>EXT: dispatch (not visible in code)
 ```
 
 ---
 
-## 3. The messaging transport — 18 producers, 0 consumers
-
-Every asynchronous flow in PacEHR dispatches to a queue that nothing in either repository reads.
+## 3. The messaging transport: 22 producers, 0 in-workspace consumers
 
 ```mermaid
 flowchart TB
-  subgraph Producers["Producers — ServiceBusQueueHelper, 18 send methods"]
-    P1["SendMatrixCareHL7MessageAsync → matrixcare-hl7"]
-    P2["SendMatrixCareProgressNoteMessageAsync → matrixcare-progress-note"]
-    P3["SendMessageUpdoxAsync → UpdoxQueueName"]
-    P4["SendUpdoxFaxAsync → UpdoxFaxQueueName"]
-    P5["SendCCMEncounterMessageAsync → CCMEncounterQueueName"]
-    P6["SendACOeCQMSMessageAsync → ACOeCQMSQueueName"]
-    P7["SendPccDocumentMessageAsync → pccDocumentsSentQueueName"]
-    P8["SendMessageAsyncForFacilityConfiguration → FacilityConfigurationQueueName"]
-    P9["SendDiagnosisMessageAsync → DrFirst"]
-    P10["SendMessageAsyncForHIE / ForHIEPatientData"]
-    P11["SendAuditLogMessageAsync / SendAuditLogMessagesAsync"]
-    P12["SendMessageChartAuditAsync · SendMessageToQuanticianAsync<br/>SendPQRSEncounterQMMessageAsync · SendMessageAsyncForPccProgressNote"]
+  subgraph Producers["Producers: ServiceBusQueueHelper, 22 send methods"]
+    P1["SendMatrixCareHL7MessageAsync to matrixcare-hl7 (literal)"]
+    P2["SendMatrixCareProgressNoteMessageAsync to matrixcare-progress-note (literal)"]
+    P3["SendMessageUpdoxAsync, SendUpdoxFaxAsync"]
+    P4["SendCCMEncounterMessageAsync"]
+    P5["SendACOeCQMSMessageAsync, SendPQRSEncounterQMMessageAsync"]
+    P6["SendPccDocumentMessageAsync, SendLinkExternalPatinetMessage"]
+    P7["SendMessageAsyncForPccProgressNote, SendMessageForPccProgressNoteProcess"]
+    P8["SendMessageAsyncForFacilityConfiguration"]
+    P9["SendDiagnosisMessageAsync (DrFirst)"]
+    P10["SendMessageAsyncForHIE, SendMessageAsyncForHIEPatientData (Kno2)"]
+    P11["SendAuditLogMessageAsync, SendAuditLogMessagesAsync"]
+    P12["SendMessageAsync, SendMessageChartAuditAsync, SendMessageToQuanticianAsync,<br/>SendMessagePatientEventSeriveBus, SendMessageEncounterEventSeriveBus"]
   end
 
   subgraph Bus["Azure Service Bus"]
-    Q["10+ named queues"]
+    Q["named queues across several namespaces"]
   end
 
-  subgraph Consumers["Consumers in pacEHR_API + PacEHR"]
-    C["NONE<br/>0 ServiceBusProcessor · 0 CreateReceiver<br/>0 ServiceBusTrigger · 0 QueueTrigger"]
+  subgraph Consumers["Receivers in pacEHR_API, PacEHR, pacEHR_AI"]
+    C["NONE<br/>0 ServiceBusProcessor, 0 CreateReceiver, 0 ServiceBusTrigger, 0 QueueTrigger"]
   end
+
+  EXT2["Named out-of-workspace consumer:<br/>HIEPatientDataFunction (kno2-patient-sbq), per code comment only"]
 
   P1 & P2 & P3 & P4 & P5 & P6 & P7 & P8 & P9 & P10 & P11 & P12 --> Q
-  Q -.->|"consumers live outside this workspace"| C
+  Q -.-> C
+  Q -.-> EXT2
 ```
 
 ---
 
 ## 4. Inbound audit chain
-
-How a raw HL7 message is correlated to staging rows and to any error.
 
 ```mermaid
 erDiagram

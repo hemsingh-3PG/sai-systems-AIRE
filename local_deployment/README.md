@@ -21,7 +21,7 @@ All three share the `pacehr-local` network, so another container reaches the AI 
 The Angular bundle is built with the API base URL pointing at `http://localhost:8080`,
 so the UI in your browser talks to the API container next to it — not to the cloud.
 
-**Nothing here modifies the repos.** This folder sits *outside* `PacEHR/`, `pacEHR_API/` and
+**Nothing here modifies the repos.** This folder sits *outside* (a sibling of) `PacEHR/`, `pacEHR_API/` and
 `PacEHR_AI/`, all of which are used only as read-only build inputs. No file in either
 repo is added, edited or committed — including the ignore rules, which are passed to
 Podman with `--ignorefile` instead of being dropped in as `.dockerignore`.
@@ -31,7 +31,7 @@ Podman with `--ignorefile` instead of being dropped in as `.dockerignore`.
 ## 1. Deploy it
 
 ```bash
-cd /Users/hem.singh/Projects/SaiSystems/Code/local_deployment
+cd <workspace>/sai-systems-AIRE/local_deployment   # <workspace> = the folder holding PacEHR, pacEHR_API, PacEHR_AI
 ./deploy.sh
 ```
 
@@ -129,9 +129,9 @@ Reading order if you want to understand the whole thing: **`config.env` → `dep
 | `WEB_API_BASE_URL` | `http://localhost:8080` | The API URL baked into the Angular bundle. Point it at the cloud DEV API instead if you only want the UI locally. |
 | `WEB_BUILD_CONFIG` | `staging` | Angular configuration. `staging` is what the Azure pipeline builds for every non-prod environment: optimized, no budget limits, keeps `environment.ts` (real DEV blob + SignalR endpoints). |
 | `WEB_OPTIMIZE` | `true` | `false` builds faster but ships a large, slow bundle. |
-| `API_REPO` / `WEB_REPO` / `AI_REPO` | `../pacEHR_API` / `../PacEHR` / `../PacEHR_AI` | Where the repos are. Relative paths resolve against this folder. |
+| `API_REPO` / `WEB_REPO` / `AI_REPO` | `../../pacEHR_API` / `../../PacEHR` / `../../PacEHR_AI` | Where the repos are (siblings of `sai-systems-AIRE`). Relative paths resolve against this folder. Override per person in `config.local.env`, not here. |
 | `AI_PORT` | `3000` | Host port for the AI service. |
-| `AI_ENV_FILE` | `../PacEHR_AI/.env.local` | The AI service's settings, passed to the container as environment variables. |
+| `AI_ENV_FILE` | `../../PacEHR_AI/.env.local` | The AI service's settings, passed to the container as environment variables. |
 | `AI_NODE_IMAGE` | `node:22-alpine` | Base image for the AI service; PacEHR_AI needs Node ≥ 22.13. |
 
 `WEB_API_BASE_URL` is **build-time**, not runtime: Angular compiles it into the bundle.
@@ -143,7 +143,7 @@ The AI service reads Azure OpenAI, Azure SQL and Entra settings. Create the file
 AI repo (it is git-ignored there), and fill it in:
 
 ```bash
-cp /Users/hem.singh/Projects/SaiSystems/Code/PacEHR_AI/.env.example /Users/hem.singh/Projects/SaiSystems/Code/PacEHR_AI/.env.local
+cp <workspace>/PacEHR_AI/.env.example <workspace>/PacEHR_AI/.env.local
 ```
 
 - The seven names with placeholders are required; the container exits at startup naming any

@@ -3,8 +3,8 @@
 **Date**: 2026-10-05
 **Author**: ANALYST_PM_BROWNFIELD
 **Status**: Approved — 2026-10-05 · **Revised 2026-10-05** (authority model + PEA-205 corrected against as-built code)
-**Source**: `Other-Docs/Epic-02/epic-02-data-layer.md` (Revision 8, 2026-10-05) synthesised
-against `Other-Docs/TicketsByAkash/00-source-index.md` (REQ ids) and `GAPS.md` (risk register)
+**Source**: `dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md` (Revision 8, 2026-10-05) synthesised
+against `dev-stories/Tickets-Original-Python/00-source-index.md` (REQ ids) and `GAPS.md` (risk register)
 **Scope of this document**: **Epic 02 only** — stories PEA-201…PEA-207. Epics 01 and 03–12 are
 deliberately excluded; see *Scope* below.
 
@@ -376,7 +376,7 @@ authority mechanism for the admin-authored tables, which raises its priority.
 
 No PRDs, designs or legacy specs are available to honour. `docs/helix/INDEX.md` is absent, so no
 prior Helix solution context was available either. The substantive source documents for this epic
-live outside `SPEC/references/`, in `Other-Docs/` — see *Source Traceability*.
+live outside `SPEC/references/`, in `dev-stories/` — see *Source Traceability*.
 
 ---
 
@@ -400,10 +400,10 @@ live outside `SPEC/references/`, in `Other-Docs/` — see *Source Traceability*.
 
 | Source | What it supplied |
 |---|---|
-| `Other-Docs/Epic-02/epic-02-data-layer.md` (Rev 8, 2026-10-05) | Authoritative story text, DDL, Gherkin AC, DoD for PEA-201…207 |
-| `Other-Docs/TicketsByAkash/00-source-index.md` | REQ-02-01…10, REQ-03-01 — 128 requirements with line citations |
-| `Other-Docs/TicketsByAkash/GAPS.md` | Risk register — eight independent reviews |
-| `Other-Docs/Epic-02/DELIVERY-PLAN.md` | Delivery sequencing |
+| `dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md` (Rev 8, 2026-10-05) | Authoritative story text, DDL, Gherkin AC, DoD for PEA-201…207 |
+| `dev-stories/Tickets-Original-Python/00-source-index.md` | REQ-02-01…10, REQ-03-01 — 128 requirements with line citations |
+| `dev-stories/Tickets-Original-Python/GAPS.md` | Risk register — eight independent reviews |
+| `dev-stories/Work-In-Progress/Epic-02/DELIVERY-PLAN.md` | Delivery sequencing |
 | `PacEHR_AI/CLAUDE.md` | The engineering standard for the build target |
 | `docs/architecture/current/*` | System context, affected modules, existing patterns |
 
@@ -489,7 +489,7 @@ this document.**
 
 ### Language drift — resolved for this epic
 
-The `Other-Docs/TicketsByAkash/` backlog states *Python · Pydantic · `create_agent`*, and its
+The `dev-stories/Tickets-Original-Python/` backlog states *Python · Pydantic · `create_agent`*, and its
 symbol-truth document is `00-langchain-api-truth.md`. The `Epic-02` private copy used here is
 **Revision 8 and already retargeted to Node/TypeScript**, with zod, `mssql` and `node --test`
 settled by shipped code. **No translation was required for Epic 02.** Two consequences worth

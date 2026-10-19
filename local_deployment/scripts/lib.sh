@@ -8,6 +8,9 @@ DEPLOY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 [ -f "$DEPLOY_ROOT/config.env" ] || { echo "config.env not found in $DEPLOY_ROOT" >&2; exit 1; }
 # shellcheck disable=SC1091
 . "$DEPLOY_ROOT/config.env"
+# Optional per-person overrides (git-ignored): see config.local.env.example.
+# shellcheck disable=SC1091
+[ -f "$DEPLOY_ROOT/config.local.env" ] && . "$DEPLOY_ROOT/config.local.env"
 
 # Relative repo paths in config.env are resolved against local_deployment/.
 _resolve() { case "$1" in /*) printf '%s' "$1" ;; *) printf '%s' "$DEPLOY_ROOT/$1" ;; esac; }

@@ -1,0 +1,8 @@
+.DS_Store
+# per-person local deployment overrides and secrets
+local_deployment/config.local.env
+.env.local
+node_modules/
+# per-person Claude Code files
+.claude/settings.local.json
+.claude/launch.json

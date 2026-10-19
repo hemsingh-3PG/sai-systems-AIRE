@@ -1,15 +1,14 @@
 # PacEHR — PointClickCare Integration Diagrams
 
-**Date**: 2026-09-30
+**Date**: 2026-10-19
 **Source**: `docs/architecture/current/04-pointclickcare-integration-deep-dive.md`
 **Produced by**: ARCHITECT (`aire-brownfield-deep-dive`, Phase 6)
+**Status**: Draft (awaiting user confirmation)
 **Audience**: BA / Product / anyone who wants the pictures without the prose
 
 ---
 
 ## 1. Token acquisition and caching
-
-How a PCC call gets an OAuth token — cache first, then delegation fallback, then refresh.
 
 ```mermaid
 sequenceDiagram
@@ -42,11 +41,7 @@ sequenceDiagram
   Note over CS: scopeValidationFailed flag returned<br/>rather than an exception
 ```
 
----
-
 ## 2. A PCC data fetch, end to end
-
-From the SPA click to four different stores.
 
 ```mermaid
 sequenceDiagram
@@ -65,10 +60,10 @@ sequenceDiagram
   Note over AI: if a full sync is running,<br/>stamps X-Sync-Call: true
   AI->>CT: POST /pccGetPatientMedication
   CT->>LF: action filter (attached by convention)
-  CT->>CT: GetHeaders() → accountID, userID, IsSyncCall
+  CT->>CT: GetHeaders() reads accountID, userID, IsSyncCall
   CT->>CT: HasPendingPccWebhookEventsAsync(apiName, accountID, pccPatientId)
   alt no pending webhook events AND not a sync call
-    CT-->>SPA: short-circuit — serve from local tables
+    CT-->>SPA: short-circuit, serve from local tables
   else
     CT->>CS: GetPCCToken(...)
     CS-->>CT: token
@@ -81,30 +76,26 @@ sequenceDiagram
     CT->>SVC: markPccWebhookEventsProcessed(apiName, accountID, pccPatientId)
   end
   LF->>CH: CaptureAsJson(request, response)
-  CH->>CDB: PccCosmosWorker drains → Cosmos
+  CH->>CDB: PccCosmosWorker drains to Cosmos
   CT-->>SPA: dictionary envelope
 ```
 
----
-
 ## 3. Webhook-gated refresh
-
-The rate-limit and cost control on outbound PCC calls — and the header that bypasses it.
 
 ```mermaid
 stateDiagram-v2
   [*] --> Idle
   Idle --> EventPending: PCC webhook received, event row written
-  EventPending --> Fetching: UI calls a pccGet* endpoint
+  EventPending --> Fetching: UI calls a pccGet endpoint
   Fetching --> Processed: data persisted, markPccWebhookEventsProcessed
   Processed --> Idle
-  Idle --> Skipped: UI calls pccGet* with no pending events
+  Idle --> Skipped: UI calls pccGet with no pending events
   Skipped --> Idle
   note right of Skipped
     HasPendingPccWebhookEventsAsync returns false,
     so the controller short-circuits and serves
     local data instead of calling PCC. This is the
-    rate-limit / cost control.
+    rate-limit and cost control.
   end note
   note right of Fetching
     A full sync (X-Sync-Call: true) bypasses the
@@ -113,11 +104,32 @@ stateDiagram-v2
   end note
 ```
 
----
+## 4. Anonymous token renewal
 
-## 4. Where PCC data lands
+```mermaid
+sequenceDiagram
+  participant X as Any caller (AllowAnonymous)
+  participant TR as PccTokenRenewalController
+  participant SV as PccService
+  participant DB as SQL
+  participant PCC as PCC login automation
 
-Four stores participate in one integration, each gated by its own config flag.
+  X->>TR: POST RenewToken {userId, accountId, orgId}
+  TR->>TR: reject only if userId <= 0 or accountId <= 0
+  TR->>SV: getAutomationCredentialsAsync(userId, accountId, orgId)
+  SV->>DB: read stored credentials
+  DB-->>SV: credentials or none
+  alt none found
+    TR-->>X: Success false, "No credentials found"
+  else found
+    TR->>PCC: automation step (50 s timeout)
+    PCC-->>TR: token result
+    TR-->>X: result dictionary
+  end
+  Note over TR: no session or secret check is visible<br/>in the action body (lines 34-60)
+```
+
+## 5. Where PCC data lands
 
 ```mermaid
 flowchart LR
@@ -128,6 +140,3 @@ flowchart LR
   API --> LAW[("Log Analytics<br/>PCCLogTableName, PCCLogMode")]
 ```
 
----
-
-**Full analysis**: `docs/architecture/current/04-pointclickcare-integration-deep-dive.md`

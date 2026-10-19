@@ -1,6 +1,6 @@
 # AI Request Payload Reference — everything sent to gpt-4o
 
-> ⚠️ **STALE — not refreshed on 2026-09-30.** This supplement was produced in the 2026-09-08 deep-dive run and has not been re-verified against the current code (301 commits later). See `12-ai-assistance-deep-dive.md` for the refreshed module analysis.
+> ⚠️ **PARTLY STALE - banner re-checked 2026-10-19 (not regenerated).** Compiled 2026-09-08/10 for the legacy OpenAI path only. `AIPromptServices.cs`, `AIController.cs`, `open-ai.service.ts` and `src/app/configs/` have **no commits since 2026-09-10** (git log, HEADs `pacEHR_API` 0f611f65c / `PacEHR` 401caa134), so the legacy content is expected to still hold, but it was not re-verified line by line. It does **not** cover the new Dragon Copilot dictation or the `pacEHR_AI` service. See `12-ai-assistance-deep-dive.md` (refreshed 2026-10-19) and `13-pacehr-ai-service-deep-dive.md`.
 
 **Date**: 2026-09-10
 **Compiled By**: ARCHITECT — read directly from source, not inferred

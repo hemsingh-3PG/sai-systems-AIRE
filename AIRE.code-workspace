@@ -1,0 +1,8 @@
+{
+  "folders": [
+    { "path": ".", "name": "sai-systems-AIRE (agentic)" },
+    { "path": "../PacEHR", "name": "PacEHR (UI)" },
+    { "path": "../pacEHR_API", "name": "pacEHR_API" },
+    { "path": "../PacEHR_AI", "name": "PacEHR_AI" }
+  ]
+}

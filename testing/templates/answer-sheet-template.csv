@@ -1,5 +1,0 @@
-Test note ID,Set,Form,Patient,Clinician,Visit date,Section,Field,Field type,Important field?,Already in form,Expected answer,Expected value,Expected unit,Also acceptable,Reference from note (exact words),Must NOT contain,Notes,Tags
-TN-ADM-0042,Locked,Admission H&P,P01 Testpatient Alpha,C1 Dr Testdoc One,2026-10-01,Vitals,Weight,Number,Yes,,Found,82,kg,,Wt 82 kg,,,
-TN-ADM-0042,Locked,Admission H&P,P01 Testpatient Alpha,C1 Dr Testdoc One,2026-10-01,Vitals,Blood pressure,Text,Yes,,Found,150/90,,,150/90 on recheck,140/90,The correction wins,correction
-TN-ADM-0042,Locked,Admission H&P,P01 Testpatient Alpha,C1 Dr Testdoc One,2026-10-01,Vitals,Temperature,Number,Yes,,Unclear,,,,temp 99.1,,No °F/°C given,unit-missing
-TN-ADM-0042,Locked,Admission H&P,P01 Testpatient Alpha,C1 Dr Testdoc One,2026-10-01,Vitals,Pulse,Number,Yes,,Not mentioned,,,,,,,

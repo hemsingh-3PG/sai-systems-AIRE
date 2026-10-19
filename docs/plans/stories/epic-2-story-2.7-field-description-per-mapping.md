@@ -17,7 +17,7 @@
 This file is a **pointer**. The User Story, Business Context, Gherkin Acceptance Criteria,
 Technical Considerations and Definition of Done for PEA-207 live in:
 
-> **`Other-Docs/Epic-02/epic-02-data-layer.md`** → section **`PEA-207 — Store the per-mapping field description in AI.fieldDescription, admin-write only`** (Revision 8, 2026-10-05)
+> **`dev-stories/Work-In-Progress/Epic-02/epic-02-data-layer.md`** → section **`PEA-207 — Store the per-mapping field description in AI.fieldDescription, admin-write only`** (Revision 8, 2026-10-05)
 
 Read that section before implementing or reviewing. **When this file and the epic doc disagree, the
 epic doc wins.** This file adds only the planning metadata above and the notes below.

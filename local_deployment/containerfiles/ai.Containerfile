@@ -31,6 +31,7 @@ CMD ["sh", "-c", "npm run typecheck && npm test && npm run build"]
 FROM deps AS build
 COPY tsconfig.json tsconfig.build.json ./
 COPY src/ src/
+COPY migrations/ migrations/
 RUN npm run build && test -f dist/server.js
 
 # ── runtime: production dependencies and the compiled output only ───────────
@@ -43,6 +44,8 @@ RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
 # context). Configuration arrives as environment variables from scripts/up.sh,
 # like app settings in Azure.
 COPY --from=build /app/dist ./dist
+# dist/migrate.js reads ../../migrations/sql beside dist, as in the repo's own Dockerfile.
+COPY --from=build /app/migrations ./migrations
 
 USER node
 ENV PORT=3000

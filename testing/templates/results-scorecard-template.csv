@@ -1,5 +1,0 @@
-Build,Date,Tester,Test note ID,Set (Practice/Locked),Form,Field,Important field? (Yes/No),Expected answer,Expected value,Expected unit,AI answer,AI value,AI unit,AI confidence,Reference correct? (Yes/No/n/a),Result,Reply time (s),Bug ID,Notes
-b1842,2026-12-03,,TN-ADM-0042,Locked,Admission H&P,Weight,Yes,Found,82,kg,Found,82,kg,High,Yes,Correct,5.2,,
-b1842,2026-12-03,,TN-ADM-0042,Locked,Admission H&P,Blood pressure,Yes,Found,150/90,,Found,140/90,,High,No,Wrong value,5.2,BUG-123,Used the value before the correction
-b1842,2026-12-03,,TN-ADM-0042,Locked,Admission H&P,Temperature,Yes,Unclear,,,Unclear,,,Low,n/a,Correct,5.2,,
-b1842,2026-12-03,,TN-ADM-0042,Locked,Admission H&P,Pulse,Yes,Not mentioned,,,Found,72,,Medium,No,Made up,5.2,BUG-124,No pulse anywhere in the note

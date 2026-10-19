@@ -4,8 +4,8 @@
 |---|---|
 | **Date** | 2026-10-13 |
 | **Baseline** | `pacEHR_AI` `PacEHR-AI-Develop-Main` @ `058308d` (111/111 unit tests pass, `tsc --noEmit` clean) · `pacEHR_API` `PacEHR-DevelopAPI-Main` @ `cd7fb39d4` · `PacEHR` `PacEHR-DevelopUI-Main` @ `aa3c70d32` |
-| **Backlog source** | `Other-Docs/TicketsByAkash` (75 stories, 12 epics, written for Python) |
-| **Design of record** | `docs/user-custom/2026-10-07-ai-encounter-schema-design.md` (rev 7) and `Other-Docs/Epic-02/DELIVERY-PLAN.md` (owner withdrawals) |
+| **Backlog source** | `dev-stories/Tickets-Original-Python` (75 stories, 12 epics, written for Python) |
+| **Design of record** | `docs/user-custom/2026-10-07-ai-encounter-schema-design.md` (rev 7) and `dev-stories/Work-In-Progress/Epic-02/DELIVERY-PLAN.md` (owner withdrawals) |
 | **Standard** | `pacEHR_AI/CLAUDE.md` (Node). The Python standard in `TicketsByAkash/CLAUDE.md` does not apply. |
 
 ---
