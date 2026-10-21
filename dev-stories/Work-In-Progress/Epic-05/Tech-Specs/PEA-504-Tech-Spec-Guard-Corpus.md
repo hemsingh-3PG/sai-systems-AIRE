@@ -1,7 +1,7 @@
 # PEA-504 — Tech Spec: One Benign and Adversarial Corpus That Every Guard Is Tested Against
 
 **Type:** Story · **Epic:** E5 · **Points:** 5 (JS ticket) · **Status:** Built, committed locally (`117bed8`, `5cee0a6`, `6d20c76`); B-057 added 2026-10-15 (PEA-501 D4); signed off by Hem Singh as data owner, 2026-10-15
-**Benchmark:** [`js-tickets/epic-05-guardrails.md`](../../js-tickets/epic-05-guardrails.md) PEA-504
+**Benchmark:** [`Tickets-Original-JS/epic-05-guardrails.md`](../../../Tickets-Original-JS/epic-05-guardrails.md) PEA-504
 **Depends on:** PEA-501, PEA-502, PEA-503 (closed by decision: its two sets were removed on 2026-10-16)
 **Code baseline:** `pacEHR_AI` branch `PacEHR-AI-Develop-Main` at `b93f989` (Epic 4 merged in PR 12886, 2026-10-15)
 **Files:** `tests/unit/guards/corpus.ts` (new) · `tests/unit/agents/guard-corpus.test.ts` (new) ·

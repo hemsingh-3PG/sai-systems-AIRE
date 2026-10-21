@@ -1,7 +1,7 @@
 # PEA-503 — PHI Masking: Close by Decision, Keep the Seam
 
 **Type:** Story · **Epic:** E5 · **Points:** 5 if built (JS ticket); **0 to build if closed** · **Status:** **Closed by decision (BAA), 2026-10-15.** The client confirmed the BAA on a call; no code change
-**Benchmark:** [`js-tickets/epic-05-guardrails.md`](../../js-tickets/epic-05-guardrails.md) PEA-503 and Notes, *"PHI masking:
+**Benchmark:** [`Tickets-Original-JS/epic-05-guardrails.md`](../../../Tickets-Original-JS/epic-05-guardrails.md) PEA-503 and Notes, *"PHI masking:
 owner decision vs other documents"*
 **Code baseline:** `pacEHR_AI` branch `PacEHR-AI-Develop-Main` at `b93f989` (Epic 4 merged in PR 12886, 2026-10-15)
 

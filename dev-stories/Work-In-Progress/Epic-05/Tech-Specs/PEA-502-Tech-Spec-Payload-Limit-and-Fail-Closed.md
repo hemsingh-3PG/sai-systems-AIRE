@@ -2,7 +2,7 @@
 
 **Type:** Story · **Epic:** E5 · **Points:** 3 (JS ticket) · **Status:** Code done, committed locally (`0d7e5f9`, plus the size tests in `5cee0a6`); the limit kept at 20,000
 (D9, decided 2026-10-15); the blocked-run wording stays a placeholder for Phase 1; D8 (FAILED runs) is open
-**Benchmark:** [`js-tickets/epic-05-guardrails.md`](../../js-tickets/epic-05-guardrails.md) PEA-502
+**Benchmark:** [`Tickets-Original-JS/epic-05-guardrails.md`](../../../Tickets-Original-JS/epic-05-guardrails.md) PEA-502
 **Depends on:** PEA-501; Epic 4 PEA-403 and PEA-407 (done); Epic 9 (message, HTTP status, audit write)
 **Code baseline:** `pacEHR_AI` branch `PacEHR-AI-Develop-Main` at `b93f989` (Epic 4 merged in PR 12886, 2026-10-15)
 **Files still to change:** `src/agents/failure-modes.ts` · `tests/unit/agents/failure-modes.test.ts`
