@@ -1,4 +1,6 @@
+# macOS Finder metadata, in every folder
 .DS_Store
+**/.DS_Store
 # per-person local deployment overrides and secrets
 local_deployment/config.local.env
 .env.local
