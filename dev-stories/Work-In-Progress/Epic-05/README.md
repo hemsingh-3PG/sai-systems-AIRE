@@ -51,7 +51,7 @@ and the JS ticket differ, the JS ticket wins, and the difference is listed in §
 | An attack Azure catches (`PROMPT_JAILBREAK_FILTERED`): outcome FAILED or BLOCKED? | **Decided 2026-10-16: FAILED** (unchanged). The reason code and the `injection attempt` line identify it | Additions X2 |
 | Approve the Azure-layer additions X1–X4 | **Approved and built 2026-10-15.** X1 off until the admin's filter exists | Additions |
 | **D11–D14** Scanner rework after four code reviews: NFKD, framed patterns, up to four scan copies, reports and order corrections not blocked | **Decided 2026-10-16 to 2026-10-21** | PEA-501 §8 |
-| **D15** A model change needs configuration only: the filter header shared by every model, every model family's special tokens | **Decided 2026-10-21** (Hem Singh). How to change the model, the Azure steps and the constants: `pacEHR_AI/README.md`, "Guardrails (Epic 5)" | PEA-501 §8 |
+| **D15** A model change needs configuration only: the filter header shared by every model, every model family's special tokens | **Decided 2026-10-21** (Hem Singh). How to change the model, the Azure steps and the constants: `pacEHR_AI/README.md`, "Guardrails" | PEA-501 §8 |
 
 ## 3. The two layers
 
@@ -162,6 +162,6 @@ Epic-05/
 - [ ] Each push that changes `src/` carries a passing `npm run eval` line in `tests/eval/history.jsonl`. *Last pass:
       run `20261015-234757` (94.5% / 82.9%), committed in `ccc64b4`. The code has changed since, so Hem Singh runs it
       again on the final commit ([Code-Changes.md §6](Code-Changes.md#6-after-the-code-reviews-2026-10-16-to-2026-10-21))*
-- [x] A model change needs configuration only (D15), documented in `pacEHR_AI/README.md`, "Guardrails (Epic 5)"
+- [x] A model change needs configuration only (D15), documented in `pacEHR_AI/README.md`, "Guardrails"
 - [ ] Open decisions D3, D4, D8 and D9 are answered or tracked with an owner (D2, D3, D4 and D9 decided 2026-10-15;
       D8, the FAILED-run message, is open with the Epic 9 owner)

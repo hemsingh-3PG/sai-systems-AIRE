@@ -200,13 +200,13 @@ a corpus entry. The details and measurements are in [CHANGE-LOG.md](CHANGE-LOG.m
 | `0ac6d7d` | PEA-504: the masking `todo` tests and sets removed | `corpus.ts`, `phi.test.ts` | no | 420: 420 pass |
 | `ef172ea` | PEA-501: patterns need the attack's framing (D12); up to four scan copies (D13) | `injection.ts`, `corpus.ts`, `injection.test.ts` | yes | 466: 466 pass |
 | Chunk 17 (staged) | Fourth review (D14): 37 clinical notes no longer blocked, 15 attack variants blocked; `model-call.ts` handles a rejection with no error object; `filterError` lists every Azure category | `injection.ts`, `model-call.ts`, `corpus.ts`, `injection.test.ts`, `harness.ts`, `model-call.test.ts`, `azureFilter.test.ts` | yes | 584: 584 pass |
-| Chunk 18 (staged) | Guardrails don't depend on the model (D15): `llmManager.guardrails` shared by every model, a test over every model getter, every family's special tokens; `README.md` "Guardrails (Epic 5)" | `llm.ts`, `injection.ts`, `llm.content-filter-policy.test.ts`, `corpus.ts`, `README.md` | yes | 597: 597 pass |
+| Chunk 18 (staged) | Guardrails don't depend on the model (D15): `llmManager.guardrails` shared by every model, a test over every model getter, every family's special tokens; `README.md` "Guardrails" | `llm.ts`, `injection.ts`, `llm.content-filter-policy.test.ts`, `corpus.ts`, `README.md` | yes | 597: 597 pass |
 
 After every step, typecheck, ESLint and the build were clean. The corpus is now 119 benign entries and 68 attacks.
 
 **Changing the model later** needs configuration only: the deployment name, the API version and the model constants at
 the top of `src/core/llm.ts`. The guardrails, what the Azure admin does, and the constants are in `pacEHR_AI/README.md`,
-"Guardrails (Epic 5)".
+"Guardrails".
 
 **To push (Hem):**
 1. Commit Chunks 17–18.

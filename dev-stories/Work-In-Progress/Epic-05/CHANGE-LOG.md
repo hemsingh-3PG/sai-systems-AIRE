@@ -26,7 +26,7 @@ Each entry gives the code state, what changed, why, and the measured result. "Ev
   Mistral `[TOOL_CALLS]` and `[SYSTEM_PROMPT]`, DeepSeek's full-width `<｜…｜>`, on top of the OpenAI, Llama, Phi and
   Qwen markers already covered. Plain `Human:` / `Assistant:` turns are deliberately left out: they're note fields
   (corpus B-119, "Assistant: J. Smith, CNA").
-- **`pacEHR_AI/README.md` has a new section, "Guardrails (Epic 5)":** the two layers, what to change when the model
+- **`pacEHR_AI/README.md` has a new section, "Guardrails":** the two layers, what to change when the model
   changes (configuration only), what the Azure admin does then, and the constants (filter name
   `pacehr-clinical-extraction`, header, filter settings, limit, classes, reason codes, log line).
 
