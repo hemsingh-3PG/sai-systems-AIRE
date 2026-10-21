@@ -1,8 +1,8 @@
 # Epic 05 — Guardrails: Implementation Pack
 
 **For:** the engineers implementing Epic 5 in `pacEHR_AI`, and the Azure admin who creates the content filter
-**From:** Hem Singh · **Updated:** 2026-10-15
-**Benchmark (source of truth):** [`js-tickets/epic-05-guardrails.md`](../js-tickets/epic-05-guardrails.md), the Node.js
+**From:** Hem Singh · **Updated:** 2026-10-21
+**Benchmark (source of truth):** [`Tickets-Original-JS/epic-05-guardrails.md`](../../Tickets-Original-JS/epic-05-guardrails.md), the Node.js
 edition. It replaces `TicketsByAkash/epic-05-guardrails.md` (the Python edition) as this pack's source. Where this pack
 and the JS ticket differ, the JS ticket wins, and the difference is listed in §1.
 **Code baseline:** `pacEHR_AI` branch `PacEHR-AI-Develop-Main` at `b93f989`, with Epic 4 merged (PR 12886,
@@ -20,9 +20,9 @@ and the JS ticket differ, the JS ticket wins, and the difference is listed in §
 |---|---|---|
 | Code baseline | develop `058308d`; the stubs throw | develop `b93f989` (Epic 4 merged); pass-through guards, live limit |
 | Injection reason codes | Five `INJECTION_*` codes | One `INJECTION_BLOCKED` plus a `patternClass` log field ([PEA-501](Tech-Specs/PEA-501-Tech-Spec-Injection-Scanner.md) D1) |
-| Scanner normalisation | NFKC and invisible characters | The JS ticket's NFKC, lower case, `<br>` and whitespace runs, **plus** invisible characters. Our old patterns let `Ignore<br>previous instructions` through |
+| Scanner normalisation | NFKC and invisible characters | The JS ticket's NFKC, lower case, `<br>` and whitespace runs, **plus** invisible characters. Our old patterns let `Ignore<br>previous instructions` through. *Since the code reviews: NFKD (D11), up to four scan copies (D13), hyphens and markdown as a space, contractions spelt out (D14)* |
 | Scanner speed test | 20,000 characters | 60,000 characters, because the scanner runs before the limit |
-| Benign corpus | 30 entries in clinical styles | 57 entries covering the JS ticket's seven styles, including benign AI instructions and pasted AI output |
+| Benign corpus | 30 entries in clinical styles | 57 entries covering the JS ticket's seven styles, including benign AI instructions and pasted AI output. *2026-10-21: 119 benign and 68 attacks, every code-review example added* |
 | Size limit | `MAX_NOTE_LENGTH_CHARS` setting | `MAX_NOTE_CHARS` constant, **already built** ([PEA-502](Tech-Specs/PEA-502-Tech-Spec-Payload-Limit-and-Fail-Closed.md) D5) |
 | No-throw check | ESLint rule | Behaviour tests, already built (D6) |
 | Blocked-run message | `clinician-message.ts`, a lookup | `BLOCKED_RUN_MESSAGE` constant in `failure-modes.ts` (D7) |
@@ -50,6 +50,8 @@ and the JS ticket differ, the JS ticket wins, and the difference is listed in §
 | **D10** Scan the patient/clinician context block once it's wired (it carries AI-generated summary text) | **Follow-up**, not this build | PEA-501 §8 |
 | An attack Azure catches (`PROMPT_JAILBREAK_FILTERED`): outcome FAILED or BLOCKED? | **Decided 2026-10-16: FAILED** (unchanged). The reason code and the `injection attempt` line identify it | Additions X2 |
 | Approve the Azure-layer additions X1–X4 | **Approved and built 2026-10-15.** X1 off until the admin's filter exists | Additions |
+| **D11–D14** Scanner rework after four code reviews: NFKD, framed patterns, up to four scan copies, reports and order corrections not blocked | **Decided 2026-10-16 to 2026-10-21** | PEA-501 §8 |
+| **D15** A model change needs configuration only: the filter header shared by every model, every model family's special tokens | **Decided 2026-10-21** (Hem Singh). How to change the model, the Azure steps and the constants: `pacEHR_AI/README.md`, "Guardrails (Epic 5)" | PEA-501 §8 |
 
 ## 3. The two layers
 
@@ -71,7 +73,7 @@ flowchart LR
       S3 --> S4[template / schema / prompt<br/>Epics 3, 4, 8]
     end
     S4 --> MC["wrapModelCall<br/>(X1: x-policy-id when set)"]
-    MC --> AZ["Layer 2 — Azure content filter<br/>(default today; custom filter if X1 approved)"]
+    MC --> AZ["Layer 2 — Azure content filter<br/>(default today; pacehr-clinical-extraction once the admin creates it)"]
     AZ -->|400| F[PROMPT_CONTENT_FILTERED<br/>X2: or PROMPT_JAILBREAK_FILTERED]
     AZ -->|200| OUT[afterAgent → outcome + audit]
     S1 -->|match| B[jumpTo end → BLOCKED<br/>INJECTION_BLOCKED + patternClass]
@@ -94,14 +96,14 @@ Epic-05/
 
 **For engineers**
 
-| Document | What it covers | Points | Status (2026-10-15) |
+| Document | What it covers | Points | Status (2026-10-21) |
 |---|---|---|---|
 | [CHANGE-LOG.md](CHANGE-LOG.md) | What changed and why, with test and eval results | — | Current |
 | [Code-Changes.md](Code-Changes.md) | **Start here for the code.** Every change, in order, and as built | — | Current |
-| [PEA-501](Tech-Specs/PEA-501-Tech-Spec-Injection-Scanner.md) | The scanner: five classes, JS normalisation, `patternClass` | 3 | Built |
+| [PEA-501](Tech-Specs/PEA-501-Tech-Spec-Injection-Scanner.md) | The scanner: five classes, JS normalisation, `patternClass` | 3 | Built; reworked after four code reviews (D11–D15) |
 | [PEA-502](Tech-Specs/PEA-502-Tech-Spec-Payload-Limit-and-Fail-Closed.md) | The limit, fail-closed, `BLOCKED_RUN_MESSAGE` | 3 | Built; D8 open |
 | [PEA-503](Tech-Specs/PEA-503-Close-by-Decision.md) | Close by decision: no code change; the document corrections | 0 (closed) | Closed; Epic 5's corrections made, other epics' left to their owners |
-| [PEA-504](Tech-Specs/PEA-504-Tech-Spec-Guard-Corpus.md) | The four-set corpus, the end-to-end guard test, the mutation test | 5 | Built, signed off |
+| [PEA-504](Tech-Specs/PEA-504-Tech-Spec-Guard-Corpus.md) | The corpus (two sets since the masking sets were removed), the end-to-end guard test, the mutation test | 5 | Built, signed off; 119 benign, 68 attacks |
 | [Azure-Layer-Additions](Tech-Specs/Azure-Layer-Additions.md) | X1–X4, outside the JS ticket | about 2 | Built; X1 off until the filter exists |
 
 **For the Azure admin**
@@ -133,6 +135,9 @@ Epic-05/
 - **After the decisions (2026-10-15):** corpus entry B-057 (D4), the `CLAUDE.md` PHI rules (PEA-503) and the Azure-layer
   additions X1–X4. **390 tests, 379 passing, 0 failing, 11 `todo`**. Eval on that code passed: precision 94.5%,
   recall 82.9%. It raised the benchmark's recall from 82.1% to 82.9%.
+- **After four code reviews (2026-10-21):** commits `af8f6d4`, `0ac6d7d` and `ef172ea`, then Chunks 17–18 staged.
+  **597 tests, 597 passing, 0 failing.** Typecheck, ESLint and the build are clean. Worst-case scan of 60,000
+  characters about 3.8 ms median. The guardrails no longer depend on the model (D15). Eval pending on the final commit.
 - Not verifiable here: the JS ticket's production figures (18%, 26%, 20%, 181, 0.9%, 54,738) and the documents they
   come from. None of them is in this workspace.
 
@@ -142,7 +147,7 @@ Epic-05/
 |---|---|
 | `pipelines/pr-validation.yml` runs `npm test` and `npm run build` on every PR | Each PR's checks include the build |
 | `.githooks/pre-push` (install with `npm run hooks:install`) runs `npm test` and `npm run build`. **When a push changes `src/`**, it also needs a `passed: true` line in `tests/eval/history.jsonl` for that exact code | PEA-501, PEA-502 and additions X1–X3 change `src/`. Before each push, Hem Singh runs `npm run eval` (VPN, DEV database and Azure OpenAI; about 11 minutes and $0.76) on exactly the code being pushed, then commit `history.jsonl`. PEA-504 changes only `tests/` and doesn't need it |
-| The eval benchmark only rises (2026-10-15: precision 94.9%, recall 82.1%) | The scanner passes all five reference notes, so the eval should be unchanged. Never edit the benchmark or cases to pass |
+| The eval benchmark only rises (precision 94.9%, recall 82.9% since 2026-10-15) | The scanner passes all five reference notes, so the eval should be unchanged. Never edit the benchmark or cases to pass |
 
 ## 7. Epic-level Definition of Done (JS ticket scope)
 
@@ -152,9 +157,11 @@ Epic-05/
       corrected. The other epics' tickets are left to their owners (PEA-503 §4.2)
 - [x] PEA-504: corpus, end-to-end test, mutation test (`117bed8`, `5cee0a6`, `6d20c76`); the masking `todo` sets removed
       (`0ac6d7d`)
-- [x] `npm run typecheck`, `npm test` and `npm run build` are clean on the epic branch (2026-10-15: 383 tests, 372
-      pass, 0 fail, 11 todo). Paste the output in each PR
-- [x] Each push that changes `src/` carries a passing `npm run eval` line in `tests/eval/history.jsonl` (run
-      `20261015-234757`, 94.5% / 82.9%; commit it with the code)
+- [x] `npm run typecheck`, `npm test` and `npm run build` are clean on the epic branch (2026-10-21, with Chunks 17–18
+      staged: 597 tests, 597 pass, 0 fail). Paste the output in the PR
+- [ ] Each push that changes `src/` carries a passing `npm run eval` line in `tests/eval/history.jsonl`. *Last pass:
+      run `20261015-234757` (94.5% / 82.9%), committed in `ccc64b4`. The code has changed since, so Hem Singh runs it
+      again on the final commit ([Code-Changes.md §6](Code-Changes.md#6-after-the-code-reviews-2026-10-16-to-2026-10-21))*
+- [x] A model change needs configuration only (D15), documented in `pacEHR_AI/README.md`, "Guardrails (Epic 5)"
 - [ ] Open decisions D3, D4, D8 and D9 are answered or tracked with an owner (D2, D3, D4 and D9 decided 2026-10-15;
       D8, the FAILED-run message, is open with the Epic 9 owner)

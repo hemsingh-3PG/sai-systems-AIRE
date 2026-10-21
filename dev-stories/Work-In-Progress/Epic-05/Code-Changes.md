@@ -1,13 +1,13 @@
 # Epic 05 — What We Build in Code (pacEHR_AI)
 
 **For:** the engineers implementing Epic 5 in `pacEHR_AI`
-**Updated:** 2026-10-15 · **Benchmark:** [`js-tickets/epic-05-guardrails.md`](../js-tickets/epic-05-guardrails.md)
+**Updated:** 2026-10-21 · **Benchmark:** [`Tickets-Original-JS/epic-05-guardrails.md`](../../Tickets-Original-JS/epic-05-guardrails.md)
 **Baseline:** `PacEHR-AI-Develop-Main` at `b93f989` (Epic 4 merged); `tsc --noEmit` clean; `npm test` 196 of 196 passing
 **Branch:** `3p-dev/epic-05-Guardrails`, one branch for the epic, from `PacEHR-AI-Develop-Main` (decided 2026-10-15)
 **Eval owner:** Hem Singh runs `npm run eval` (VPN and DEV database) before each push that changes `src/`
-**Status (2026-10-15):** Steps 1–3 are built and committed locally, in 6 commits ending `6d20c76`. The decision follow-ups
-and the approved additions X1–X4 are built on top, not yet committed (§5). Not pushed: the eval is rerun on the final
-commit
+**Status (2026-10-21):** every story is built. 11 commits ending `ef172ea` are committed locally; Chunks 17–18 (the
+fourth code review, and guardrails that don't depend on the model) are staged on top for Hem Singh to commit (§6). Not
+pushed: one `npm run eval` on the final commit covers everything since `ccc64b4`
 
 This is the checklist. The full design of each change is in the specs linked below. Nothing here needs Azure access.
 
@@ -26,7 +26,7 @@ Spec: [PEA-501](Tech-Specs/PEA-501-Tech-Spec-Injection-Scanner.md).
 
 | File | Change |
 |---|---|
-| `src/guards/injection.ts` | Replace the pass-through. Add `PATTERN_CLASSES` (in precedence order), the exported `INJECTION_PATTERNS` record and `normaliseForScan()` (NFKC, invisible characters, `<br>` and whitespace runs, lower case). `scan()` returns `{ blocked, patternClass? }` |
+| `src/guards/injection.ts` | Replace the pass-through. Add `PATTERN_CLASSES` (in precedence order), the exported `INJECTION_PATTERNS` record and `normaliseForScan()` (NFKC, invisible characters, `<br>` and whitespace runs, lower case; NFKD and more since, PEA-501 D11–D15). `scan()` returns `{ blocked, patternClass? }` |
 | `src/agents/middleware/guard.ts` | `const scan = injectionScanner.scan(raw); if (scan.blocked) return block('INJECTION_BLOCKED', { patternClass: scan.patternClass });` |
 | `tests/unit/guards/injection.test.ts` | Replace the pass-through test. One test per corpus entry, plus precedence and `lastIndex`, note unchanged, 60,000 characters under 10 ms, and the table shape |
 | `tests/unit/agents/harness.ts` | Collaborator signatures take `note`; add `REAL_GUARDS` |
@@ -88,8 +88,8 @@ git commit -m "..."     # in the same commit as the code, or after it with no fu
 git push
 ```
 
-The scanner passes all five reference notes (measured), so the eval should match the benchmark (2026-10-15: precision
-94.9%, recall 82.1%). Step 3 (PEA-504) only changes `tests/`, so it needs no new eval run. `git push --no-verify` is
+The scanner passes all five reference notes (measured, and checked by `npm test`), so the eval should match the
+benchmark (precision 94.9%, recall 82.9% since 2026-10-15). Step 3 (PEA-504) only changes `tests/`, so it needs no new eval run. `git push --no-verify` is
 for emergencies only.
 
 ## 3. Additions beyond the JS ticket (approved and built 2026-10-15)
@@ -181,11 +181,36 @@ Result: **390 tests, 379 passing, 0 failing, 11 todo**. Typecheck, ESLint and th
 about ten reported a single failure that didn't recur and wasn't identified; watch for it in CI.
 
 **Eval:** passed on `6d20c76` (precision 93.5%, recall 77.5%), then on Chunks 7–12 (run `20261015-234757`: precision
-94.5%, recall 82.9%). The second run raised the benchmark's recall from 82.1% to 82.9%. To push:
-1. Commit exactly the staged tree, with `tests/eval/history.jsonl` and `tests/eval/benchmark.json`. Its fingerprint
-   `dd6601d6…` matches the run.
-2. `git push -u origin 3p-dev/epic-05-Guardrails`.
+94.5%, recall 82.9%). The second run raised the benchmark's recall from 82.1% to 82.9%; it was committed in `ccc64b4`.
+The push steps are now in §6.
 
 **Decisions recorded 2026-10-15:** D3 follow-up; D4 not blocked; D9 keep 20,000; the BLOCKED wording stays a placeholder
 for Phase 1; PEA-503 closed (client call); corpus signed off by Hem Singh; X1–X4 approved. D8, the FAILED-run message, is
 still open.
+
+## 6. After the code reviews (2026-10-16 to 2026-10-21)
+
+Four code reviews against the stories. Each finding was reproduced before it was fixed, and each fixed example became
+a corpus entry. The details and measurements are in [CHANGE-LOG.md](CHANGE-LOG.md).
+
+| Commit or chunk | What | Files | `src/` | `npm test` after |
+|---|---|---|---|---|
+| `ccc64b4` | Eval run `20261015-234757` and the raised benchmark | `history.jsonl`, `benchmark.json` | no | 390: 379 pass, 11 todo |
+| `af8f6d4` | PEA-501 review fixes: NFKD (D11), entities, invisible characters and tags, teach-back and therapy cueing; `promptFilterCategories()` as X2's one prompt-filter check | `injection.ts`, `model-call.ts`, tests | yes | 431: 420 pass, 11 todo |
+| `0ac6d7d` | PEA-504: the masking `todo` tests and sets removed | `corpus.ts`, `phi.test.ts` | no | 420: 420 pass |
+| `ef172ea` | PEA-501: patterns need the attack's framing (D12); up to four scan copies (D13) | `injection.ts`, `corpus.ts`, `injection.test.ts` | yes | 466: 466 pass |
+| Chunk 17 (staged) | Fourth review (D14): 37 clinical notes no longer blocked, 15 attack variants blocked; `model-call.ts` handles a rejection with no error object; `filterError` lists every Azure category | `injection.ts`, `model-call.ts`, `corpus.ts`, `injection.test.ts`, `harness.ts`, `model-call.test.ts`, `azureFilter.test.ts` | yes | 584: 584 pass |
+| Chunk 18 (staged) | Guardrails don't depend on the model (D15): `llmManager.guardrails` shared by every model, a test over every model getter, every family's special tokens; `README.md` "Guardrails (Epic 5)" | `llm.ts`, `injection.ts`, `llm.content-filter-policy.test.ts`, `corpus.ts`, `README.md` | yes | 597: 597 pass |
+
+After every step, typecheck, ESLint and the build were clean. The corpus is now 119 benign entries and 68 attacks.
+
+**Changing the model later** needs configuration only: the deployment name, the API version and the model constants at
+the top of `src/core/llm.ts`. The guardrails, what the Azure admin does, and the constants are in `pacEHR_AI/README.md`,
+"Guardrails (Epic 5)".
+
+**To push (Hem):**
+1. Commit Chunks 17–18.
+2. `npm run eval` on that commit (VPN on). The last passing run (`dd6601d6…`) is for older code, so the pre-push hook
+   refuses the push without a new one.
+3. Commit `tests/eval/history.jsonl` (and `tests/eval/benchmark.json` if it rises).
+4. `git push -u origin 3p-dev/epic-05-Guardrails`, then open the PR into `PacEHR-AI-Develop-Main`.
